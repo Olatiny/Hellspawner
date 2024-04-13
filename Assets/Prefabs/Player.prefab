@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2745088942262920387}
   m_Layer: 2
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,7 +97,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 2202588703862564252}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 57c2692ddac512c4b83a331b5f424039, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -221,3 +221,20 @@ MonoBehaviour:
   jumpHoldTime: 0.15
   walkSpeed: 10
   maxFallSpeed: 20
+  jumpBufferTime: 0.2
+  jumpRaycastDist: 0.4
+  projectilePrefab: {fileID: 1817933880115920156, guid: 21a801bbf56e4a9498b98f775e73263f, type: 3}
+  projectileSpawnDist: 0.8
+  maxProjectiles: 3
+  projectileSpeed: 15
+  defaultAttackDamage: 1
+  chargeAttackDamage: 3
+  maxChargeTime: 1.5
+  attackCooldownTime: 0.1
+  projectiles: []
+  currentAttackDamage: 1
+  dashSpeed: 20
+  dashTime: 0.15
+  frostAOEprefab: {fileID: 3248402227556359220, guid: ded795340006a49448f00a72737ba1e5, type: 3}
+  frostTime: 2
+  frostCooldown: 4

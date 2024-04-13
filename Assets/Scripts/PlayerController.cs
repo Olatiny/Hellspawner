@@ -1,39 +1,71 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private float gravity = 75f;
+    [Header("Stats")]
+    public int maxHealth = 6;
+    public int currentHealth;
 
-    [SerializeField]
-    private float jumpVelocity = 15f;
+    [Header("Platforming")]
+    [SerializeField] private float gravity = 75f;
+    [SerializeField] private float jumpVelocity = 15f;
+    [SerializeField] private float jumpHoldTime = .15f;
+    [SerializeField] private float walkSpeed = 10f;
+    [SerializeField] private float maxFallSpeed = 20f;
+    [SerializeField] private float jumpBufferTime = .1f;
+    [SerializeField] private float jumpRaycastDist = .8f;
 
-    [SerializeField]
-    private float jumpHoldTime = .15f;
+    [Header("Attacking/Projectiles")]
+    [SerializeField] private PlayerProjectile projectilePrefab;
+    [SerializeField] private float projectileSpawnDist = .5f;
+    [SerializeField] private int maxProjectiles = 3;
+    [SerializeField] private float projectileSpeed = 10f;
+    [SerializeField] private int defaultAttackDamage = 1;
+    [SerializeField] private int chargeAttackDamage = 3;
+    [SerializeField] private float maxChargeTime = 1.5f;
+    [SerializeField] private float attackCooldownTime = .1f;
+    public List<PlayerProjectile> projectiles;
+    public float currentAttackDamage;
 
-    [SerializeField]
-    private float walkSpeed = 10f;
+    [Header("Dashing")]
+    [SerializeField] private float dashSpeed = 1f;
+    [SerializeField] private float dashTime = .25f;
 
-    [SerializeField]
-    private float maxFallSpeed = 20f;
+    [Header("Frost")]
+    [SerializeField] private FrostAOE frostAOEprefab;
+    [SerializeField] private float frostTime = 2f;
+    [SerializeField] private float frostCooldown = 4f;
+    [SerializeField] private float slowDownTime = 2f;
 
     private PlayerInput playerInput;
     private PlayerInputActions inputActions;
 
     private Rigidbody2D myRigidBody;
     private Collider2D myCollider;
+    private Vector2 direction;
 
     bool grounded = true;
     bool holdingJump = false;
-    Coroutine jumpTimer = null;
+    bool bufferingJump = false;
+    bool attackCooldown = false;
+    bool dashing = false;
+    bool canDash = true;
+    bool canSpawnFrost = true;
+    bool slowed = false;
+
+    Coroutine jumpBufferRoutine = null;
+    Coroutine jumpHoldRoutine = null;
+    Coroutine chargeAttackRoutine = null;
 
     private void Start()
     {
+        projectiles = new();
+        currentHealth = maxHealth;
+
         myRigidBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
 
@@ -41,68 +73,161 @@ public class PlayerController : MonoBehaviour
         inputActions = new();
         inputActions.PlatformerControls.Enable();
 
-        inputActions.PlatformerControls.Jump.performed += Jump;
-        inputActions.PlatformerControls.Jump.canceled += Jump;
+        inputActions.PlatformerControls.Jump.performed += JumpInput;
+        inputActions.PlatformerControls.Jump.canceled += JumpInput;
+
         inputActions.PlatformerControls.Attack.performed += Attack;
+        inputActions.PlatformerControls.Attack.canceled += Attack;
+
         inputActions.PlatformerControls.Dash.performed += Dash;
-        inputActions.PlatformerControls.Laser.performed += Laser;
+
         inputActions.PlatformerControls.Frost.performed += Frost;
+
+        direction = Vector2.right;
     }
 
     private void FixedUpdate()
     {
+        if (dashing)
+            return;
+
         // Gravity if not jumping
         if (!holdingJump && myRigidBody.velocity.y > -maxFallSpeed)
-            myRigidBody.velocity += gravity * Time.fixedDeltaTime * Vector2.down;
+            myRigidBody.velocity += (slowed ? gravity / 2 : gravity) * Time.fixedDeltaTime * Vector2.down;
 
         // Check if Grounded 
-        RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, Vector2.down, 1.5f);
-        Debug.DrawRay(gameObject.transform.position, Vector2.down * 1.5f, Color.black, .1f);
+        RaycastHit2D hit = Physics2D.CircleCast(gameObject.transform.position, .5f, Vector2.down, jumpRaycastDist);
+        //(gameObject.transform.position, Vector2.down * 1.5f, Color.black, .05f);
         grounded = hit.collider != null && hit.collider != myCollider;
 
+        if (grounded)
+            canDash = true;
+
+        // Buffer Jump
+        if (grounded & bufferingJump)
+        {
+            StopCoroutine(jumpBufferRoutine);
+            jumpBufferRoutine = null;
+            Jump();
+        }
+
         // Movement
-        Vector2 direction = inputActions.PlatformerControls.Move.ReadValue<Vector2>();
-        myRigidBody.velocity = new(direction.x * walkSpeed, myRigidBody.velocity.y);
+        Vector2 moveInput = inputActions.PlatformerControls.Move.ReadValue<Vector2>();
+
+        if (moveInput.x != 0)
+        {
+            direction = new(moveInput.x / Mathf.Abs(moveInput.x), 0);
+            myRigidBody.velocity = new(direction.x * walkSpeed, myRigidBody.velocity.y);
+        }
+        else
+            myRigidBody.velocity = new(0, myRigidBody.velocity.y);
+
+        if (slowed)
+            myRigidBody.velocity = new(myRigidBody.velocity.x / 2, myRigidBody.velocity.y);
     }
 
-    public void Jump(CallbackContext context)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("FrostAOE") && collision.gameObject.GetComponent<FrostAOE>().owner != gameObject)
+            StartCoroutine(SlowDown(slowDownTime));
+    }
+
+    public void TakeDamage(int damageAmt)
+    {
+        currentHealth -= damageAmt;
+
+        if (currentHealth <= 0)
+            return; // Game Over
+    }
+
+    public void JumpInput(CallbackContext context)
+    {
+        if (context.performed && !grounded)
+        {
+            if (jumpBufferRoutine != null)
+            {
+                StopCoroutine(jumpBufferRoutine);
+                jumpBufferRoutine = null;
+            }
+
+            jumpBufferRoutine = StartCoroutine(BufferJump(jumpBufferTime));
+            return;
+        }
+
         if (context.performed && grounded)
         {
-            holdingJump = true;
-            myRigidBody.velocity = jumpVelocity * Vector2.up;
-            jumpTimer = StartCoroutine(JumpHoldTimer(jumpHoldTime));
+            Jump();
         }
         else if (context.canceled)
         {
             holdingJump = false;
 
-            if (jumpTimer != null)
+            if (jumpHoldRoutine != null)
             {
-                StopCoroutine(jumpTimer);
-                jumpTimer = null;
+                StopCoroutine(jumpHoldRoutine);
+                jumpHoldRoutine = null;
             }
         }
     }
 
+    public void Jump()
+    {
+        bufferingJump = false;
+        holdingJump = true;
+
+        // come back to this if you decide to give player acceleration
+        int waveDashMult = dashing ? 2 : 1;
+
+        myRigidBody.velocity = (slowed ? jumpVelocity / 1.4f : jumpVelocity) * Vector2.up;
+        //myRigidBody.velocity = new Vector2(myRigidBody.velocity.x * waveDashMult, jumpVelocity);
+        jumpHoldRoutine = StartCoroutine(JumpHoldTimer(jumpHoldTime));
+    }
+
     public void Attack(CallbackContext context)
     {
+        if (projectiles.Count >= maxProjectiles || attackCooldown)
+            return;
 
+        if (context.performed /* && can use charge attack */)
+        {
+            chargeAttackRoutine = StartCoroutine(ChargeAttackTimer(maxChargeTime));
+        }
+        else if (context.canceled)
+        {
+            PlayerProjectile goop = Instantiate(projectilePrefab, transform.position + (Vector3)(direction * projectileSpawnDist), transform.rotation);
+            goop.SendProjectile(this, projectileSpeed, direction.normalized, currentAttackDamage);
+            projectiles.Add(goop);
+
+            if (chargeAttackRoutine != null)
+                StopCoroutine(chargeAttackRoutine);
+
+            StartCoroutine(AttackCooldownTimer(attackCooldownTime));
+        }
     }
 
     public void Dash(CallbackContext context)
     {
+        if (!context.performed || !canDash)
+            return;
 
-    }
+        canDash = false;
+        dashing = true;
 
-    public void Laser(CallbackContext context)
-    {
+        Vector2 moveInput = inputActions.PlatformerControls.Move.ReadValue<Vector2>();
 
+        if (moveInput == Vector2.zero)
+            moveInput = direction;
+
+        myRigidBody.velocity = moveInput.normalized * dashSpeed;
+        StartCoroutine(DashTimer(dashTime));
     }
 
     public void Frost(CallbackContext context)
     {
-
+        if (context.performed && canSpawnFrost)
+        {
+            StartCoroutine(FrostTimer(frostTime, frostCooldown));
+        }
     }
 
     IEnumerator JumpHoldTimer(float seconds = 0.5f)
@@ -112,6 +237,63 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(seconds);
         holdingJump = false;
-        jumpTimer = null;
+        jumpHoldRoutine = null;
+    }
+
+    IEnumerator ChargeAttackTimer(float seconds = 1.5f)
+    {
+        currentAttackDamage = defaultAttackDamage;
+
+        float elapsedTime = 0;
+
+        while (currentAttackDamage < chargeAttackDamage)
+        {
+            currentAttackDamage = Mathf.Lerp(defaultAttackDamage, chargeAttackDamage, elapsedTime / seconds);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        chargeAttackRoutine = null;
+        yield return null;
+    }
+
+    IEnumerator AttackCooldownTimer(float seconds)
+    {
+        attackCooldown = true;
+        yield return new WaitForSeconds(seconds);
+        attackCooldown = false;
+    }
+
+    IEnumerator BufferJump(float seconds)
+    {
+        bufferingJump = true;
+        yield return new WaitForSeconds(seconds);
+        bufferingJump = false;
+    }
+
+    IEnumerator DashTimer(float seconds)
+    {
+        dashing = true;
+        yield return new WaitForSeconds(seconds);
+        dashing = false;
+    }
+
+    IEnumerator FrostTimer(float frostTime, float frostCooldown)
+    {
+        canSpawnFrost = false;
+        FrostAOE frost = Instantiate(frostAOEprefab, transform.position, transform.rotation);
+        frost.owner = gameObject;
+        yield return new WaitForSeconds(frostTime);
+        Destroy(frost.gameObject);
+        yield return new WaitForSeconds(frostCooldown);
+        canSpawnFrost = true;
+    }
+
+    IEnumerator SlowDown(float slowTime)
+    {
+        slowed = true;
+        yield return new WaitForSeconds(slowTime);
+        slowed = false;
     }
 }
