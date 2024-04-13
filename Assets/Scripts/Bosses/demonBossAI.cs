@@ -229,7 +229,7 @@ public class demonBossAI : MonoBehaviour
         //beam.transform.LookAt(player.transform);
         //Euler.angle
 
-        //Vector3 direction = player.transform.position - beam.transform.position;
+        Vector3 direction = player.transform.position - beam.transform.position;
 
         // Set the local right direction of this object to point towards the target
         //beam.transform.right = direction.normalized;
@@ -242,6 +242,20 @@ public class demonBossAI : MonoBehaviour
         // Calculate a rotation a step closer to the target and applies rotation to this object
         //beam.transform.rotation = Quaternion.LookRotation(newDirection);
         //beam.transform.LookAt(player.transform.position);
+
+        // Rotate the forward vector towards the target direction by one step
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, direction, 100.0f, 0.0f);
+
+        // Draw a ray pointing at our target in
+        Debug.DrawRay(transform.position, newDirection, Color.red);
+
+        // Calculate a rotation a step closer to the target and applies rotation to this object
+        beam.transform.rotation = Quaternion.LookRotation(newDirection);
+        float zsave = beam.transform.rotation.x;
+        beam.transform.Rotate(0.0f, 0.0f, zsave, Space.World);
+        //beam.transform.rotation.x = 0;
+        // beam.transform.rotation.y = 0;
+        // beam.transform.rotation.z = zsave;
         Destroy(beam, scorchingRayDuration);
 
 
