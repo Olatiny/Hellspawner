@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdatePlayerHealthAfterLoad()
     {
-        if (levelDifficulty == Difficulty.Hard)
+        if (levelDifficulty == Difficulty.Extreme)
             maxPlayerHealth = 1;
         else
             maxPlayerHealth = defaultMaxHealth;
