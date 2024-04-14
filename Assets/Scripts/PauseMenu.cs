@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -12,10 +13,9 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive( false );
     }
 
-
     void Update()
     {
-        if( Input.GetKeyDown( KeyCode.Escape ) && GameManager.fighting == true )
+        if(( Input.GetKeyDown( KeyCode.Escape ) || Input.GetKeyDown( KeyCode.JoystickButton7 ) ) && GameManager.fighting == true )
         {
             if(paused)
                 Resume();

@@ -22,8 +22,8 @@ public class GameManager : MonoBehaviour
     private int playerHealth = 5;
     [SerializeField]
     private int maxPlayerHealth = 5;
-
     public static bool fighting = false;
+    public bool paused = false;
 
     enum Difficulty 
     {
@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Difficulty levelDifficulty;
 
-
     private void Awake(){
         bossSelectCanv.enabled = false;
         mainMenuCanv.enabled = true;
@@ -46,7 +45,7 @@ public class GameManager : MonoBehaviour
 		    _instance = this;
 	    }
     }
-    // Start is called before the first frame update
+   
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -57,6 +56,11 @@ public class GameManager : MonoBehaviour
         }
         //normal mode don't update health
         //hard mode die on hit
+    }
+
+    void Update()
+    {
+        paused = PauseMenu.paused;
     }
 
     public void setHealth(int newhealth){

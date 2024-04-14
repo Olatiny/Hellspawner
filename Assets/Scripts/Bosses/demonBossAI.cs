@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class demonBossAI : bossTemplate
 {
+    private GameManager gameManagerRef;
+
     bool canAttack = true;
     bool isSwooping = false;
     bool isScorchingRay = false;
@@ -44,6 +46,11 @@ public class demonBossAI : bossTemplate
     // Start is called before the first frame update
     protected void Start()
     {
+        if (gameManagerRef == null)
+        {
+            gameManagerRef = FindObjectOfType<GameManager>();
+        }
+
         base.Start();
         rb = GetComponent<Rigidbody2D>();
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
@@ -54,6 +61,8 @@ public class demonBossAI : bossTemplate
     // Update is called once per frame
     void Update()
     {
+        if( gameManagerRef.paused )
+            return;
 
         //Debug.Log(isSwooping);
         if (bossHealth <= 0)

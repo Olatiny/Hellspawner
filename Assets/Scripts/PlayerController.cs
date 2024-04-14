@@ -42,10 +42,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slowDownTime = 2f;
 
     private GameManager gameManagerRef;
-
-    private PlayerInput playerInput;
+    public PlayerInput playerInput;
     private PlayerInputActions inputActions;
-
     private Rigidbody2D myRigidBody;
     private Collider2D myCollider;
     private Vector2 direction;
@@ -91,6 +89,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if( gameManagerRef.paused )
+            return;
+
         if (dashing)
             return;
 
@@ -185,6 +186,9 @@ public class PlayerController : MonoBehaviour
 
     public void Attack(CallbackContext context)
     {
+        if( gameManagerRef.paused )
+            return;
+
         if (projectiles.Count >= maxProjectiles || attackCooldown)
             return;
 
