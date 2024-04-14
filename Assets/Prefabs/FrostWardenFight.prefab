@@ -120,10 +120,11 @@ GameObject:
   - component: {fileID: 898346453221044934}
   - component: {fileID: 9101032640940754585}
   - component: {fileID: 5115791516338919650}
+  - component: {fileID: 444264542563061371}
   - component: {fileID: 6374369809581348784}
   m_Layer: 0
   m_Name: FrostWarden
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -242,6 +243,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &444264542563061371
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7299997495009261607}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 6200000, guid: 57c2692ddac512c4b83a331b5f424039, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!114 &6374369809581348784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +282,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ed303bcd9c0334f87d4148689eb8fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossMaxHealth: 100
+  bossCurrentHealth: 0
+  gravity: 2
+  jumpVelocity: 30
+  jumpHoldTime: 0.15
+  walkSpeed: 10
+  maxFallSpeed: 20
+  jumpBufferTime: 0.1
+  jumpRaycastDist: 0.8
+  walktimeMin: 1
+  walktimeMax: 3
+  coolDownTime: 0.5
+  frostAOEprefab: {fileID: 0}
+  frostTime: 2
+  frostCooldown: 4
+  slowDownTime: 2
 --- !u!1 &8033256894015830730
 GameObject:
   m_ObjectHideFlags: 0
