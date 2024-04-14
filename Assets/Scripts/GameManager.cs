@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int maxPlayerHealth = 5;
 
+    public static bool fighting = false;
+
     enum Difficulty 
     {
         Easy,
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake(){
         bossSelectCanv.enabled = false;
+        mainMenuCanv.enabled = true;
 	    if (_instance != null && _instance != this){
 		    Destroy(this.gameObject);
 	    }
@@ -128,7 +131,6 @@ public class GameManager : MonoBehaviour
         setEasyDifficulty();
         bossSelectCanv.enabled = true;
         mainMenuCanv.enabled = false;
-        bossSelectCanv.enabled = true;
         SceneManager.LoadScene("BossSelect");
     }
 
@@ -147,16 +149,19 @@ public class GameManager : MonoBehaviour
     }
 
     public void startDemonBossFight(){
+        fighting = true;
         bossSelectCanv.enabled = false;
         SceneManager.LoadScene("grantBossTestScene");
     }
 
     public void startLichBossFight(){
+        fighting = true;
         bossSelectCanv.enabled = false;
         SceneManager.LoadScene("lichScene");
     }
 
     public void startFrostWardenBossFight(){
+        fighting = true;
         bossSelectCanv.enabled = false;
         SceneManager.LoadScene("frostwardenScene");
     }
