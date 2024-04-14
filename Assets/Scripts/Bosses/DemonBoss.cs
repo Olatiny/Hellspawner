@@ -40,19 +40,32 @@ public class DemonBoss : Boss
     Transform destination = null;
     Transform source = null;
 
+    Animator myAnimator;
+
     // Start is called before the first frame update
-    protected void Start()
+    protected override void Start()
     {
         base.Start();
         rb = GetComponent<Rigidbody2D>();
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
 
         player = FindAnyObjectByType<PlayerController>().gameObject;
+
+        myAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (player)
+        {
+            Vector2 dir = player.transform.position - transform.position;
+
+            if (dir.x < 0)
+                GetComponent<SpriteRenderer>().flipX = true;
+            else
+                GetComponent<SpriteRenderer>().flipX = false;
+        }
 
         //Debug.Log(isSwooping);
         if (bossHealth <= 0)
@@ -143,6 +156,8 @@ public class DemonBoss : Boss
 
     void swoopingAttack()
     {
+        myAnimator.SetBool("Attacking", false);
+
         while (destination == null || destination.position.Equals(source.position))
         {
             destination = movePoints[Random.Range(0, movePoints.Count)];
@@ -160,6 +175,8 @@ public class DemonBoss : Boss
 
     void scorchingRayAttack()
     {
+        myAnimator.SetBool("Attacking", true);
+
         Laser beam = Instantiate(laserPrefab, transform.position, transform.rotation);
         beam.Fire(player.GetComponent<PlayerController>(), attackDamage);
     }

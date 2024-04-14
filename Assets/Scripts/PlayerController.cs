@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D myRigidBody;
     private Collider2D myCollider;
     private Vector2 direction;
+    private Animator myAnimator;
 
     bool grounded = true;
     bool holdingJump = false;
@@ -71,6 +72,7 @@ public class PlayerController : MonoBehaviour
         myRigidBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
         gameManager = GameManager.Instance;
+        myAnimator = GetComponent<Animator>();
 
         playerInput = GetComponent<PlayerInput>();
         inputActions = new();
@@ -91,6 +93,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (direction.x < 0)
+            GetComponent<SpriteRenderer>().flipX = true;
+        else
+            GetComponent<SpriteRenderer>().flipX = false;
+
         if (dashing)
             return;
 
@@ -99,7 +106,7 @@ public class PlayerController : MonoBehaviour
             myRigidBody.velocity += (slowed ? gravity / 2 : gravity) * Time.fixedDeltaTime * Vector2.down;
 
         // Check if Grounded 
-        RaycastHit2D hit = Physics2D.CircleCast(gameObject.transform.position, .5f, Vector2.down, jumpRaycastDist);
+        RaycastHit2D hit = Physics2D.CircleCast(gameObject.transform.position, .25f, Vector2.down, jumpRaycastDist);
         //(gameObject.transform.position, Vector2.down * 1.5f, Color.black, .05f);
         grounded = hit.collider != null && hit.collider != myCollider;
 
@@ -127,6 +134,9 @@ public class PlayerController : MonoBehaviour
 
         if (slowed)
             myRigidBody.velocity = new(myRigidBody.velocity.x / 2, myRigidBody.velocity.y);
+
+        myAnimator.SetBool("Airborne", !grounded);
+        myAnimator.SetBool("Running", grounded && myRigidBody.velocity.x != 0);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -137,7 +147,8 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damageAmt)
     {
-        gameManager.PlayerTakeDamage(damageAmt);
+        if (!dashing)
+            gameManager.PlayerTakeDamage(damageAmt);
     }
 
     public void JumpInput(CallbackContext context)
@@ -194,6 +205,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (context.canceled)
         {
+            myAnimator.SetTrigger("Shoot");
             PlayerProjectile goop = Instantiate(projectilePrefab, transform.position + (Vector3)(direction * projectileSpawnDist), transform.rotation);
             goop.SendProjectile(this, projectileSpeed, direction.normalized, currentAttackDamage);
             projectiles.Add(goop);
@@ -292,7 +304,10 @@ public class PlayerController : MonoBehaviour
     IEnumerator DashTimer(float seconds)
     {
         dashing = true;
+        SpriteRenderer rend = GetComponent<SpriteRenderer>();
+        rend.color = Color.gray;
         yield return new WaitForSeconds(seconds);
+        rend.color = Color.white;
         dashing = false;
     }
 
@@ -314,11 +329,13 @@ public class PlayerController : MonoBehaviour
         slowed = false;
     }
 
-    public bool canDoDash(){
+    public bool canDoDash()
+    {
         return canDash;
     }
 
-    public bool canDoFrost(){
+    public bool canDoFrost()
+    {
         return canSpawnFrost;
     }
 }
