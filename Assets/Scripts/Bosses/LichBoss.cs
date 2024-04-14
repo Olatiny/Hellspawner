@@ -51,7 +51,7 @@ public class LichBoss : Boss
     {
         //select random spot from teleport points
         int teleportIndex = Random.Range(0, teleportPoints.Count);
-        Debug.Log(teleportIndex);
+        //Debug.Log(teleportIndex);
         //teleport to new spot if new
         teleport(lastPosition, teleportPoints[teleportIndex]);
         //and shoot projectile at player

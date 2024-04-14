@@ -166,7 +166,7 @@ MonoBehaviour:
   bossCurrentHealth: 0
   player: {fileID: 0}
   teleportPoints: []
-  lichprojectileprefab: {fileID: 0}
+  lichprojectileprefab: {fileID: 3705913403178246775, guid: 088145872c5538f4484a5b2744f6abbb, type: 3}
 --- !u!1 &5852186238456700103
 GameObject:
   m_ObjectHideFlags: 0
