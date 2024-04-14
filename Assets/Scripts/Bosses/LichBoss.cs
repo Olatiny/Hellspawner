@@ -13,7 +13,8 @@ public class LichBoss : Boss
 
     bool canAttack = true;
 
-    float attackCooldown = 1.5f;
+    [SerializeField]
+    private float attackCooldown = 1.5f;
 
     private Rigidbody2D rb;
 
@@ -21,6 +22,8 @@ public class LichBoss : Boss
     private LichBossProjectile lichprojectileprefab; //projectile prefab ref
 
     float attackDamage = 1f;
+
+    int lastIndexOfTeleport;
 
     
     // Start is called before the first frame update
@@ -51,7 +54,8 @@ public class LichBoss : Boss
     {
         //select random spot from teleport points
         int teleportIndex = Random.Range(0, teleportPoints.Count);
-        //Debug.Log(teleportIndex);
+        lastIndexOfTeleport = teleportIndex;
+        Debug.Log(teleportIndex);
         //teleport to new spot if new
         teleport(lastPosition, teleportPoints[teleportIndex]);
         //and shoot projectile at player
@@ -64,17 +68,17 @@ public class LichBoss : Boss
         if (lastPosition == null){
             //update current position to new position
             this.transform.position = newPosition.position;
-        }
-        else if (lastPosition == newPosition){
-            //recall teleport with new random
-        }
-        else{
-            //last spot isnt new spot
             //save current transform to lastposition
             lastPosition = this.transform;
-            //update current position to new position
-            teleport(lastPosition, teleportPoints[Random.Range(0, teleportPoints.Count)]);
         }
+        while (lastPosition == newPosition){
+            newPosition = teleportPoints[Random.Range(0, teleportPoints.Count)];
+        }
+        //last spot isnt new spot so teleporta and save old spot
+        //update current position to new position
+        this.transform.position = newPosition.position;
+        //save current transform to lastposition
+        lastPosition = this.transform;
     }
 
 
@@ -90,5 +94,12 @@ public class LichBoss : Boss
     {
         LichBossProjectile lichprojectile = Instantiate(lichprojectileprefab, transform.position, transform.rotation);
         lichprojectile.Fire(player.GetComponent<PlayerController>(), attackDamage);
+    }
+
+    protected override void OnDeath()
+    {
+        GameManager.Instance.beatLich();
+
+        base.OnDeath();
     }
 }

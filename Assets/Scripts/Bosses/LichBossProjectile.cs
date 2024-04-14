@@ -10,7 +10,7 @@ public class LichBossProjectile : MonoBehaviour
     bool rotating = false;
     public PlayerController player;
     public float damageToDeal = 1f;
-    private float proj_Speed = 10.0f;
+    private float proj_Speed = 8.0f;
     private Vector2 direction;
 
     // Start is called before the first frame update
