@@ -82,6 +82,7 @@ public class AudioManager : MonoBehaviour
 
 
     [SerializeField] private List<AudioClip> click;
+    [SerializeField] private List<AudioClip> extremeMode;
 
 
 
@@ -185,6 +186,8 @@ public class AudioManager : MonoBehaviour
 
     // menu
     public void ClickSFX() => SFX(click);
+    public void ExtremeModeSFX() => SFX(extremeMode);
+
 
 
 
