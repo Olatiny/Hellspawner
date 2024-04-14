@@ -26,9 +26,10 @@ public class PlayerProjectile : MonoBehaviour
 
         // Damage Enemy
         if (collision.gameObject.CompareTag("Enemy"))
-        {
+            collision.gameObject.GetComponent<bossTemplate>().TakeDamage(damage);
 
-        }
+        if (collision.gameObject.CompareTag("EnemyAttack"))
+            print("Projectile hit with player projectile, destroy it when implemented"); // TODO: <- what he said.
 
         // We hit a wall
         KillProjectile();
