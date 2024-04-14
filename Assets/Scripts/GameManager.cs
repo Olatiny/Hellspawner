@@ -64,11 +64,6 @@ public class GameManager : MonoBehaviour
         paused = PauseMenu.paused;
     }
 
-    void Update()
-    {
-        paused = PauseMenu.paused;
-    }
-
     public void setHealth(int newhealth)
     {
         playerHealth = newhealth;

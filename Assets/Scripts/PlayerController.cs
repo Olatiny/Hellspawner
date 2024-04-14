@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
         myRigidBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
-        gameManager = GameManager.Instance;
+        gameManagerRef = GameManager.Instance;
 
         playerInput = GetComponent<PlayerInput>();
         inputActions = new();
@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damageAmt)
     {
-        gameManager.PlayerTakeDamage(damageAmt);
+        gameManagerRef.PlayerTakeDamage(damageAmt);
     }
 
     public void JumpInput(CallbackContext context)
@@ -173,6 +173,9 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        if( gameManagerRef.paused )
+            return;
+
         bufferingJump = false;
         holdingJump = true;
 
@@ -211,6 +214,9 @@ public class PlayerController : MonoBehaviour
 
     public void Dash(CallbackContext context)
     {
+        if( gameManagerRef.paused )
+            return;
+
         if (!context.performed || !canDash /*|| !gameManager.LichDefeated*/)
             return;
 
