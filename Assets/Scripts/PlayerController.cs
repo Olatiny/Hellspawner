@@ -313,4 +313,12 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(slowTime);
         slowed = false;
     }
+
+    public bool canDoDash(){
+        return canDash;
+    }
+
+    public bool canDoFrost(){
+        return canSpawnFrost;
+    }
 }

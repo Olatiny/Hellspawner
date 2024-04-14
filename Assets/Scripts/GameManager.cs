@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour
         }
         //normal mode don't update health
         //hard mode die on hit
+
     }
 
     // Handles which canvases should be displayed each time a scene is loaded.
@@ -241,16 +242,22 @@ public class GameManager : MonoBehaviour
     public void startDemonBossFight()
     {
         SceneManager.LoadScene(demonScene);
+        //show ability ui
+        playerHealthUI.GetComponent<PlayerHealth>().AddAbilityGUI();
     }
 
     public void startLichBossFight()
     {
         SceneManager.LoadScene(lichScene);
+        //show ability ui
+        playerHealthUI.GetComponent<PlayerHealth>().AddAbilityGUI();
     }
 
     public void startFrostWardenBossFight()
     {
         SceneManager.LoadScene(frostScene);
+        //show ability ui
+        playerHealthUI.GetComponent<PlayerHealth>().AddAbilityGUI();
     }
 
     //method for hidden boss fight button
