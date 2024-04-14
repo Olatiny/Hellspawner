@@ -9,6 +9,7 @@ public class Boss : MonoBehaviour
     protected virtual void Start()
     {
         bossCurrentHealth = bossMaxHealth;
+        GameManager.Instance.UpdateBossHealthBar(this);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
@@ -20,6 +21,8 @@ public class Boss : MonoBehaviour
     public void TakeDamage(float damage)
     {
         bossCurrentHealth -= damage;
+
+        GameManager.Instance.UpdateBossHealthBar(this);
 
         if (bossCurrentHealth <= 0)
             OnDeath();

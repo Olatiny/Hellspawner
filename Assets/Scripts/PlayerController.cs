@@ -188,7 +188,7 @@ public class PlayerController : MonoBehaviour
         if (projectiles.Count >= maxProjectiles || attackCooldown)
             return;
 
-        if (context.performed /*&& gameManager.DemonDefeated*/)
+        if (context.performed && gameManager.DemonDefeated)
         {
             chargeAttackRoutine = StartCoroutine(ChargeAttackTimer(maxChargeTime));
         }
@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
 
     public void Dash(CallbackContext context)
     {
-        if (!context.performed || !canDash /*|| !gameManager.LichDefeated*/)
+        if (!context.performed || !canDash || !gameManager.LichDefeated)
             return;
 
         canDash = false;
@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
 
     public void Frost(CallbackContext context)
     {
-        if (context.performed && canSpawnFrost /*&& gameManager.FrostWardenDefeated*/)
+        if (context.performed && canSpawnFrost && gameManager.FrostWardenDefeated)
         {
             StartCoroutine(FrostTimer(frostTime, frostCooldown));
         }
