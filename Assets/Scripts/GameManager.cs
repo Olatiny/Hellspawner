@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public static bool fighting = false;
-    public bool paused = 
+    public bool paused = false;
 
     private void Awake()
     {
@@ -247,8 +247,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void startDemonBossFight()
-        fighting = true;
     {
+        fighting = true;
         SceneManager.LoadScene(demonScene);
     }
 
