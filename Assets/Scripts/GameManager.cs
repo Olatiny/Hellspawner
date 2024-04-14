@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviour
     public bool LichDefeated = false;
 
     public static GameManager Instance;
+    [SerializeField]
+    private Canvas mainMenuCanv;
+
+    [SerializeField]
+    private Canvas bossSelectCanv;
 
     [SerializeField]
     private int playerHealth = 5;
@@ -29,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-
+        bossSelectCanv.enabled = false;
         if (Instance != null && Instance != this)
         {
             Destroy(this.gameObject);
@@ -100,6 +105,8 @@ public class GameManager : MonoBehaviour
     public void LoseGame()
     {
         //lose game means reset
+        bossSelectCanv.enabled = false;
+        mainMenuCanv.enabled = true;
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -136,41 +143,46 @@ public class GameManager : MonoBehaviour
     public void startEasyGame()
     {
         setEasyDifficulty();
+        bossSelectCanv.enabled = true;
+        mainMenuCanv.enabled = false;
         SceneManager.LoadScene("BossSelect");
     }
 
     public void startHardGame()
     {
         setHardDifficulty();
+        mainMenuCanv.enabled = false;
+        bossSelectCanv.enabled = true;
         SceneManager.LoadScene("BossSelect");
     }
 
     public void startExtremeGame()
     {
         setExtremeDifficulty();
+        mainMenuCanv.enabled = false;
+        bossSelectCanv.enabled = true;
         SceneManager.LoadScene("BossSelect");
     }
 
-    public void startDemonBossFight()
-    {
-        SceneManager.LoadScene("DemonScene");
+    public void startDemonBossFight(){
+        bossSelectCanv.enabled = false;
+        SceneManager.LoadScene("grantBossTestScene");
     }
 
-    public void startLichBossFight()
-    {
+    public void startLichBossFight(){
+        bossSelectCanv.enabled = false;
         SceneManager.LoadScene("lichScene");
     }
 
-    public void startFrostWardenBossFight()
-    {
+    public void startFrostWardenBossFight(){
+        bossSelectCanv.enabled = false;
         SceneManager.LoadScene("frostwardenScene");
     }
 
     //method for hidden boss fight button
-    public void startHiddenBossFight()
-    {
-        if (DemonDefeated && FrostWardenDefeated && LichDefeated)
-        {
+    public void startHiddenBossFight(){
+        bossSelectCanv.enabled = false;
+        if (DemonDefeated && FrostWardenDefeated && LichDefeated){
             //SceneManager.LoadScene("hiddenBoss");
         }
 
