@@ -20,8 +20,8 @@ public class GameManager : MonoBehaviour
     enum Difficulty 
     {
         Easy,
-        Medium,
-        Hard
+        Hard,
+        Extreme
     }
 
     [SerializeField]
@@ -58,19 +58,19 @@ public class GameManager : MonoBehaviour
         return playerHealth;
     }
 
-    public void playerTakeDamage(){
+    public void playerTakeDamage(int damage){
         //Cam player take damage sound guh
         //if hard then lose on hit
-        if (levelDifficulty == Difficulty.Hard)
+        if (levelDifficulty == Difficulty.Extreme)
         {
             LoseGame();
         }
-        if (playerHealth == 1)
+        if ((playerHealth - damage) <= 0)
         {
             LoseGame();
         }
-        //player can take a damage and lose
-        playerHealth--;
+        //player can take a damage and not lose
+        playerHealth -= damage;
         //update ui
 
     }
@@ -79,17 +79,17 @@ public class GameManager : MonoBehaviour
         levelDifficulty = Difficulty.Easy;
     }
 
-    public void setMediumDifficulty(){
-        levelDifficulty = Difficulty.Medium;
-    }
-
     public void setHardDifficulty(){
         levelDifficulty = Difficulty.Hard;
     }
 
+    public void setExtremeDifficulty(){
+        levelDifficulty = Difficulty.Extreme;
+    }
+
     public void LoseGame(){
         //lose game means reset
-        //SceneManager.LoadScene("mainmenu");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public bool lichStatus(){
@@ -114,6 +114,45 @@ public class GameManager : MonoBehaviour
 
     public void beatdemon(){
         DemonDefeatedBeatBool = true;
+    }
+
+    public void startEasyGame(){
+        setEasyDifficulty();
+        SceneManager.LoadScene("BossSelect");
+    }
+
+    public void startHardGame(){
+        setHardDifficulty();
+        SceneManager.LoadScene("BossSelect");
+    }
+
+    public void startExtremeGame(){
+        setExtremeDifficulty();
+        SceneManager.LoadScene("BossSelect");
+    }
+
+    public void startDemonBossFight(){
+        //SceneManager.LoadScene("");
+    }
+
+    public void startLichBossFight(){
+        SceneManager.LoadScene("lichScene");
+    }
+
+    public void startFrostWardenBossFight(){
+        SceneManager.LoadScene("frostwardenScene");
+    }
+
+    //method for hidden boss fight button
+    public void startHiddenBossFight(){
+        if (DemonDefeatedBeatBool && FrostWardenBeatBool && LichBeatBool){
+            //SceneManager.LoadScene("hiddenBoss");
+        }
+        
+    }
+
+    public void exitGame(){
+        Application.Quit();
     }
 
 

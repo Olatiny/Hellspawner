@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float frostCooldown = 4f;
     [SerializeField] private float slowDownTime = 2f;
 
+    private GameManager gameManagerRef;
+
     private PlayerInput playerInput;
     private PlayerInputActions inputActions;
 
@@ -68,6 +70,7 @@ public class PlayerController : MonoBehaviour
 
         myRigidBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
+        gameManagerRef = FindObjectOfType<GameManager>();
 
         playerInput = GetComponent<PlayerInput>();
         inputActions = new();
@@ -134,10 +137,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damageAmt)
     {
-        currentHealth -= damageAmt;
-
-        if (currentHealth <= 0)
-            return; // Game Over
+        gameManagerRef.playerTakeDamage(damageAmt);
     }
 
     public void JumpInput(CallbackContext context)
