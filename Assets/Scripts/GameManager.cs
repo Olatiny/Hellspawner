@@ -1,29 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public bool DemonDefeatedBeatBool = false;
+    public bool DemonDefeated = false;
 
-    public bool FrostWardenBeatBool = false;
+    public bool FrostWardenDefeated = false;
 
-    public bool LichBeatBool = false;
+    public bool LichDefeated = false;
 
-    [SerializeField]
-    private Canvas mainMenuCanv;
+    public static GameManager Instance;
 
-    [SerializeField]
-    private Canvas bossSelectCanv;
-
-    public static GameManager _instance;
     [SerializeField]
     private int playerHealth = 5;
     [SerializeField]
     private int maxPlayerHealth = 5;
 
-    enum Difficulty 
+    enum Difficulty
     {
         Easy,
         Hard,
@@ -34,15 +27,20 @@ public class GameManager : MonoBehaviour
     Difficulty levelDifficulty;
 
 
-    private void Awake(){
-        bossSelectCanv.enabled = false;
-	    if (_instance != null && _instance != this){
-		    Destroy(this.gameObject);
-	    }
-	    else{
-		    _instance = this;
-	    }
+    private void Awake()
+    {
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,15 +54,18 @@ public class GameManager : MonoBehaviour
         //hard mode die on hit
     }
 
-    public void setHealth(int newhealth){
+    public void setHealth(int newhealth)
+    {
         playerHealth = newhealth;
     }
 
-    public int getHealth(){
+    public int getHealth()
+    {
         return playerHealth;
     }
 
-    public void playerTakeDamage(int damage){
+    public void PlayerTakeDamage(int damage)
+    {
         //Cam player take damage sound guh
         //if hard then lose on hit
         if (levelDifficulty == Difficulty.Extreme)
@@ -81,64 +82,77 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void setEasyDifficulty(){
+    public void setEasyDifficulty()
+    {
         levelDifficulty = Difficulty.Easy;
     }
 
-    public void setHardDifficulty(){
+    public void setHardDifficulty()
+    {
         levelDifficulty = Difficulty.Hard;
     }
 
-    public void setExtremeDifficulty(){
+    public void setExtremeDifficulty()
+    {
         levelDifficulty = Difficulty.Extreme;
     }
 
-    public void LoseGame(){
+    public void LoseGame()
+    {
         //lose game means reset
         bossSelectCanv.enabled = false;
         mainMenuCanv.enabled = true;
         SceneManager.LoadScene("MainMenu");
     }
 
-    public bool lichStatus(){
-        return LichBeatBool;
+    public bool lichStatus()
+    {
+        return LichDefeated;
     }
 
-    public bool frostWardenStatus(){
-        return FrostWardenBeatBool;
+    public bool frostWardenStatus()
+    {
+        return FrostWardenDefeated;
     }
 
-    public bool demonStatus(){
-        return DemonDefeatedBeatBool;
+    public bool demonStatus()
+    {
+        return DemonDefeated;
     }
 
-    public void beatLich(){
-        LichBeatBool = true;
+    public void beatLich()
+    {
+        LichDefeated = true;
     }
 
-    public void beatfrostWarden(){
-        FrostWardenBeatBool = true;
+    public void beatfrostWarden()
+    {
+        FrostWardenDefeated = true;
     }
 
-    public void beatdemon(){
-        DemonDefeatedBeatBool = true;
+    public void BeatDemon()
+    {
+        DemonDefeated = true;
     }
 
-    public void startEasyGame(){
+    public void startEasyGame()
+    {
         setEasyDifficulty();
         bossSelectCanv.enabled = true;
         mainMenuCanv.enabled = false;
         SceneManager.LoadScene("BossSelect");
     }
 
-    public void startHardGame(){
+    public void startHardGame()
+    {
         setHardDifficulty();
         mainMenuCanv.enabled = false;
         bossSelectCanv.enabled = true;
         SceneManager.LoadScene("BossSelect");
     }
 
-    public void startExtremeGame(){
+    public void startExtremeGame()
+    {
         setExtremeDifficulty();
         mainMenuCanv.enabled = false;
         bossSelectCanv.enabled = true;
@@ -166,10 +180,11 @@ public class GameManager : MonoBehaviour
         if (DemonDefeatedBeatBool && FrostWardenBeatBool && LichBeatBool){
             //SceneManager.LoadScene("hiddenBoss");
         }
-        
+
     }
 
-    public void exitGame(){
+    public void exitGame()
+    {
         Application.Quit();
     }
 

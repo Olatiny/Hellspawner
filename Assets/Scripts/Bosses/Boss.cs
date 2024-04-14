@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class bossTemplate : MonoBehaviour
+public class Boss : MonoBehaviour
 {
     public float bossMaxHealth = 100f;
     public float bossCurrentHealth;
@@ -13,9 +14,7 @@ public class bossTemplate : MonoBehaviour
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-        {
-            // Damage Player
-        }
+            GameManager.Instance.PlayerTakeDamage(1);
     }
 
     public void TakeDamage(float damage)
@@ -23,12 +22,12 @@ public class bossTemplate : MonoBehaviour
         bossCurrentHealth -= damage;
 
         if (bossCurrentHealth <= 0)
-            Die();
+            OnDeath();
     }
 
-    private void Die()
+    protected virtual void OnDeath()
     {
-        // TODO: Let Game Manager know death occurred.
+        SceneManager.LoadScene("BossSelect");
     }
 }
 
