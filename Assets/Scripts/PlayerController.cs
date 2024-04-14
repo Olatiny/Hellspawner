@@ -230,6 +230,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Kill()
+    {
+        inputActions.PlatformerControls.Jump.performed -= JumpInput;
+        inputActions.PlatformerControls.Jump.canceled -= JumpInput;
+
+        inputActions.PlatformerControls.Attack.performed -= Attack;
+        inputActions.PlatformerControls.Attack.canceled -= Attack;
+
+        inputActions.PlatformerControls.Dash.performed -= Dash;
+
+        inputActions.PlatformerControls.Frost.performed -= Frost;
+
+        inputActions.Dispose();
+        Destroy(this);
+        Destroy(gameObject);
+    }
+
     IEnumerator JumpHoldTimer(float seconds = 0.5f)
     {
         if (!holdingJump)

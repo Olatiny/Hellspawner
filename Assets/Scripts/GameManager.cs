@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            OnSceneLoaded(SceneManager.GetActiveScene(), new());
         }
     }
 
@@ -32,6 +34,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image bossHealthBar;
     [SerializeField] private TextMeshProUGUI bossName;
     [SerializeField] private GameObject playerHealthUI;
+
+    [Header("Player Health Stuff")]
+    [SerializeField] private int defaultMaxHealth = 10;
     public int playerHealth { get; private set; } = 10;
     public int maxPlayerHealth { get; private set; } = 10;
 
@@ -44,35 +49,33 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string lichScene;
     [SerializeField] private string finalScene;
 
-    enum Difficulty
+    public enum Difficulty
     {
-        Easy,
+        Normal,
         Hard,
         Extreme
     }
 
     [SerializeField]
-    Difficulty levelDifficulty;
+    Difficulty levelDifficulty = Difficulty.Normal;
 
     // Start is called before the first frame update
     void Start()
     {
         //if easy mode set health to maxhealth
-        if (levelDifficulty == Difficulty.Easy)
+        if (levelDifficulty == Difficulty.Normal)
         {
             playerHealth = maxPlayerHealth;
         }
         //normal mode don't update health
         //hard mode die on hit
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     // Handles which canvases should be displayed each time a scene is loaded.
     void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
     {
-        if (levelDifficulty == Difficulty.Easy)
-            playerHealth = maxPlayerHealth;
+        if (levelDifficulty == Difficulty.Normal)
+            UpdatePlayerHealthAfterLoad();
 
         if (scene.name == mainMenuScene)
         {
@@ -105,6 +108,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetDifficulty(GameManager.Difficulty difficulty)
+    {
+        this.levelDifficulty = difficulty;
+
+        UpdatePlayerHealthAfterLoad();
+    }
+
+    public void UpdatePlayerHealthAfterLoad()
+    {
+        if (levelDifficulty == Difficulty.Hard)
+            maxPlayerHealth = 1;
+        else
+            maxPlayerHealth = defaultMaxHealth;
+
+        playerHealth = maxPlayerHealth;
+    }
+
     public void setHealth(int newhealth)
     {
         playerHealth = newhealth;
@@ -133,26 +153,25 @@ public class GameManager : MonoBehaviour
         playerHealthUI.GetComponent<PlayerHealth>().UpdateHearts();
     }
 
-    public void setEasyDifficulty()
+    public void setNormalDifficulty()
     {
-        levelDifficulty = Difficulty.Easy;
+        SetDifficulty(Difficulty.Normal);
     }
 
     public void setHardDifficulty()
     {
-        levelDifficulty = Difficulty.Hard;
+        SetDifficulty(Difficulty.Hard);
     }
 
     public void setExtremeDifficulty()
     {
-        levelDifficulty = Difficulty.Extreme;
+        SetDifficulty(Difficulty.Extreme);
     }
 
     public void LoseGame()
     {
         //lose game means reset
-        bossSelectCanv.enabled = false;
-        mainMenuCanv.enabled = true;
+        FindAnyObjectByType<PlayerController>().Kill();
         SceneManager.LoadScene(gameOverScene);
     }
 
@@ -195,52 +214,63 @@ public class GameManager : MonoBehaviour
         DemonDefeated = true;
     }
 
+    public void Victory()
+    {
+        FindAnyObjectByType<PlayerController>()?.Kill();
+        LoadBossSelect();
+    }
+
     public void startEasyGame()
     {
-        setEasyDifficulty();
-        bossSelectCanv.enabled = true;
-        mainMenuCanv.enabled = false;
+        setNormalDifficulty();
         SceneManager.LoadScene(bossSelectScene);
     }
 
     public void startHardGame()
     {
         setHardDifficulty();
-        mainMenuCanv.enabled = false;
-        bossSelectCanv.enabled = true;
         SceneManager.LoadScene(bossSelectScene);
     }
 
     public void startExtremeGame()
     {
         setExtremeDifficulty();
-        mainMenuCanv.enabled = false;
-        bossSelectCanv.enabled = true;
         SceneManager.LoadScene(bossSelectScene);
     }
 
-    public void startDemonBossFight(){
-        bossSelectCanv.enabled = false;
+    public void startDemonBossFight()
+    {
         SceneManager.LoadScene(demonScene);
     }
 
-    public void startLichBossFight(){
-        bossSelectCanv.enabled = false;
+    public void startLichBossFight()
+    {
         SceneManager.LoadScene(lichScene);
     }
 
-    public void startFrostWardenBossFight(){
-        bossSelectCanv.enabled = false;
+    public void startFrostWardenBossFight()
+    {
         SceneManager.LoadScene(frostScene);
     }
 
     //method for hidden boss fight button
-    public void startHiddenBossFight(){
-        bossSelectCanv.enabled = false;
-        if (DemonDefeated && FrostWardenDefeated && LichDefeated){
+    public void startHiddenBossFight()
+    {
+        if (DemonDefeated && FrostWardenDefeated && LichDefeated)
+        {
             //SceneManager.LoadScene("hiddenBoss");
         }
 
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(mainMenuScene);
+    }
+
+    public void LoadBossSelect()
+    {
+        SceneManager.LoadScene(bossSelectScene);
     }
 
     public void exitGame()

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
@@ -30,7 +29,7 @@ public class Boss : MonoBehaviour
 
     protected virtual void OnDeath()
     {
-        SceneManager.LoadScene("BossSelect");
+        GameManager.Instance.Victory();
     }
 }
 

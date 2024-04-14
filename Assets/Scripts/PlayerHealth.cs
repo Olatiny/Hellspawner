@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,10 +24,13 @@ public class PlayerHealth : MonoBehaviour
 
     public void UpdateHearts()
     {
+        if (!gameManager)
+            gameManager = GameManager.Instance;
+
         int currHealth = gameManager.playerHealth;
         int maxHealth = gameManager.maxPlayerHealth;
 
-        foreach(GameObject heart in hearts)
+        foreach (GameObject heart in hearts)
             Destroy(heart);
 
         for (int i = 0; i < maxHealth; i++)
