@@ -21,15 +21,15 @@ public class PlayerProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Ignore collisions with self
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("PlayerAttack") || collision.gameObject.CompareTag("Laser"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("PlayerAttack") || collision.gameObject.CompareTag("Laser") || collision.gameObject.CompareTag("EnemyAttack"))
             return;
 
         // Damage Enemy
         if (collision.gameObject.CompareTag("Enemy"))
             collision.gameObject.GetComponent<Boss>().TakeDamage(damage);
 
-        if (collision.gameObject.CompareTag("EnemyAttack"))
-           print("Projectile hit with player projectile, destroy it when implemented"); // TODO: <- what he said.
+        if (collision.gameObject.CompareTag("Skull"))
+            Destroy(collision.gameObject);
 
         // We hit a wall
         KillProjectile();

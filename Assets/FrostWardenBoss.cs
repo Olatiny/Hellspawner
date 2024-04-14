@@ -41,6 +41,7 @@ public class FrostWardenBoss : Boss
     bool slowed = false;
     bool canAttack = true;
     bool bufferingJump = false;
+    bool moving = false;
 
     protected override void Start()
     {
@@ -68,6 +69,9 @@ public class FrostWardenBoss : Boss
         if (bufferingJump)
             Jump();
 
+        if (!moving)
+            return;
+
         // Movement
         if (walkDirection.x != 0)
         {
@@ -78,6 +82,13 @@ public class FrostWardenBoss : Boss
 
         if (slowed)
             myRigidBody.velocity = new(myRigidBody.velocity.x / 2, myRigidBody.velocity.y);
+    }
+
+    protected override void OnDeath()
+    {
+        GameManager.Instance.beatfrostWarden();
+
+        base.OnDeath();
     }
 
     private void Action()
@@ -111,6 +122,8 @@ public class FrostWardenBoss : Boss
         walkDirection = new(dir, 0);
         walkTime = UnityEngine.Random.Range(walktimeMin, walktimeMax + 1);
 
+        moving = true;
+
         StartCoroutine(AttackCooldown(walkTime));
     }
 
@@ -140,8 +153,12 @@ public class FrostWardenBoss : Boss
 
     IEnumerator AttackCooldown(float bonusCooldownTime = 0)
     {
-        yield return new WaitForSeconds(bonusCooldownTime + coolDownTime);
+        yield return new WaitForSeconds(bonusCooldownTime);
         walkDirection = Vector2.zero;
+        moving = false;
+        myRigidBody.velocity = new(0, myRigidBody.velocity.y);
+
+        yield return new WaitForSeconds(coolDownTime);
         canAttack = true;
     }
 }
