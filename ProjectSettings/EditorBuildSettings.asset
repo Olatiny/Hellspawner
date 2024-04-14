@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/lichScene.unity
     guid: 79ec4e71214e1ba4b9362c889b50b389
   - enabled: 1
-    path: Assets/Scenes/frostwardenScene.unity
+    path: Assets/Scenes/FrostWardenScene.unity
     guid: ee8cc2ef7c2e6834a8a232dfdbe873f1
   - enabled: 1
     path: Assets/Scenes/grantBossTestScene.unity
