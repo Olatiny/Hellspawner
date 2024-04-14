@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - FrostAOE
   - Laser
+  - BossHealthBar
+  - EnemyAttack
   layers:
   - Default
   - TransparentFX

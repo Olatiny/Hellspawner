@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
@@ -9,6 +8,7 @@ public class Boss : MonoBehaviour
     protected virtual void Start()
     {
         bossCurrentHealth = bossMaxHealth;
+        GameManager.Instance.UpdateBossHealthBar(this);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
@@ -21,13 +21,15 @@ public class Boss : MonoBehaviour
     {
         bossCurrentHealth -= damage;
 
+        GameManager.Instance.UpdateBossHealthBar(this);
+
         if (bossCurrentHealth <= 0)
             OnDeath();
     }
 
     protected virtual void OnDeath()
     {
-        SceneManager.LoadScene("BossSelect");
+        GameManager.Instance.Victory();
     }
 }
 

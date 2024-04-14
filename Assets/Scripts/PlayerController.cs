@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
         if (projectiles.Count >= maxProjectiles || attackCooldown)
             return;
 
-        if (context.performed /*&& gameManager.DemonDefeated*/)
+        if (context.performed && gameManager.DemonDefeated)
         {
             chargeAttackRoutine = StartCoroutine(ChargeAttackTimer(maxChargeTime));
         }
@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour
         if( gameManagerRef.paused )
             return;
 
-        if (!context.performed || !canDash /*|| !gameManager.LichDefeated*/)
+        if (!context.performed || !canDash || !gameManager.LichDefeated)
             return;
 
         canDash = false;
@@ -237,10 +237,27 @@ public class PlayerController : MonoBehaviour
         if( gameManagerRef.paused )
             return;
 
-        if (context.performed && canSpawnFrost /*&& gameManager.FrostWardenDefeated*/)
+        if (context.performed && canSpawnFrost && gameManager.FrostWardenDefeated)
         {
             StartCoroutine(FrostTimer(frostTime, frostCooldown));
         }
+    }
+
+    public void Kill()
+    {
+        inputActions.PlatformerControls.Jump.performed -= JumpInput;
+        inputActions.PlatformerControls.Jump.canceled -= JumpInput;
+
+        inputActions.PlatformerControls.Attack.performed -= Attack;
+        inputActions.PlatformerControls.Attack.canceled -= Attack;
+
+        inputActions.PlatformerControls.Dash.performed -= Dash;
+
+        inputActions.PlatformerControls.Frost.performed -= Frost;
+
+        inputActions.Dispose();
+        Destroy(this);
+        Destroy(gameObject);
     }
 
     IEnumerator JumpHoldTimer(float seconds = 0.5f)
