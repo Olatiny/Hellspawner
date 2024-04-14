@@ -9,6 +9,7 @@ public class Laser : MonoBehaviour
     public float activeSeconds = .2f;
     public float damageToDeal = 1f;
 
+    bool lethal = false;
     bool rotating = false;
 
     private void Update()
@@ -21,10 +22,13 @@ public class Laser : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
-            print("Projectile hit player, damage it when implemented"); // TODO: <- what he said.
+        if (collision.gameObject.CompareTag("Player") && lethal)
+        {
+            GameManager.Instance.PlayerTakeDamage((int)damageToDeal);
+            lethal = false;
+        }
     }
 
     public void Fire(PlayerController player, float damage)
@@ -47,10 +51,14 @@ public class Laser : MonoBehaviour
 
         yield return new WaitForSeconds(chargeSeconds * .33f);
 
+        lethal = true;
+
         transform.GetComponentInChildren<SpriteRenderer>().color = Color.red;
         transform.localScale = new(1, 1, 1);
 
         yield return new WaitForSeconds(activeSeconds);
+
+        lethal = false;
 
         Destroy(gameObject);
     }

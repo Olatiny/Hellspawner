@@ -592,9 +592,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ad11fa49f0d014ab2128c05ef9b28e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DemonDefeatedBeatBool: 0
-  FrostWardenBeatBool: 0
-  LichBeatBool: 0
+  DemonDefeated: 0
+  FrostWardenDefeated: 0
+  LichDefeated: 0
   mainMenuCanv: {fileID: 1763895088}
   bossSelectCanv: {fileID: 1506799177}
   playerHealth: 5

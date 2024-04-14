@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class demonBossAI : bossTemplate
+public class DemonBoss : Boss
 {
     private GameManager gameManagerRef;
 
@@ -98,9 +97,11 @@ public class demonBossAI : bossTemplate
         }
     }
 
-    private void Die()
+    protected override void OnDeath()
     {
+        GameManager.Instance.BeatDemon();
 
+        base.OnDeath();
     }
 
     void attack()
