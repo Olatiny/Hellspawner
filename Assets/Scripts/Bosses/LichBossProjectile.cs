@@ -67,6 +67,7 @@ public class LichBossProjectile : MonoBehaviour
             lethal = false;
             //player attack and skull collide, destroy skull
             Destroy(gameObject);
+            Destroy(collision.gameObject);
         }
     }
 
