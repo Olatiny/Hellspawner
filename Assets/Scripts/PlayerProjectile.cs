@@ -28,8 +28,8 @@ public class PlayerProjectile : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
             collision.gameObject.GetComponent<Boss>().TakeDamage(damage);
 
-        if (collision.gameObject.CompareTag("Skull"))
-            Destroy(collision.gameObject);
+        //if (collision.gameObject.CompareTag("Skull"))
+        //    Destroy(collision.gameObject);
 
         // We hit a wall
         KillProjectile();
