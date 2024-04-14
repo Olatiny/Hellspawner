@@ -20,11 +20,10 @@ public class PauseMenu : MonoBehaviour
             if(paused)
                 Resume();
             else
-            {
                 Pause();
-                Debug.Log("Paused");
-            }
         }
+        if( GameManager.fighting == false )
+            Resume();
     }
 
     void Resume()

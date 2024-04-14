@@ -180,6 +180,7 @@ public class GameManager : MonoBehaviour
     public void LoseGame()
     {
         //lose game means reset
+        fighting = false;
         FindAnyObjectByType<PlayerController>().Kill();
         SceneManager.LoadScene(gameOverScene);
     }
@@ -274,6 +275,7 @@ public class GameManager : MonoBehaviour
     //method for hidden boss fight button
     public void startHiddenBossFight()
     {
+        fighting = true;
         if (DemonDefeated && FrostWardenDefeated && LichDefeated)
         {
             //SceneManager.LoadScene("hiddenBoss");
@@ -283,11 +285,13 @@ public class GameManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        fighting = false;
         SceneManager.LoadScene(mainMenuScene);
     }
 
     public void LoadBossSelect()
     {
+        fighting = false;
         SceneManager.LoadScene(bossSelectScene);
     }
 
