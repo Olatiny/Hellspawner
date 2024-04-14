@@ -19,7 +19,8 @@ public class lichStartButton : MonoBehaviour
         
     }
 
-    public void startFight(){
+    public void startFight()
+    {
         gameManagerRef.startLichBossFight();
     }
 }
