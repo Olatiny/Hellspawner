@@ -23,5 +23,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/grantBossTestScene.unity
     guid: b73ae2ea87c7c284bbd63c84d7659760
+  - enabled: 1
+    path: Assets/Scenes/DemonScene.unity
+    guid: 04496b45d6a09d14581f93f963330fc3
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 910708c518e6db5488ee8cf309b012bc, type: 2}
