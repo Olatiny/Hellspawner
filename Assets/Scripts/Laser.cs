@@ -17,9 +17,11 @@ public class Laser : MonoBehaviour
         if (!rotating)
             return;
 
-        Vector2 dir = (player.transform.position - transform.position).normalized;
-        float angle = -1 * Vector2.SignedAngle(dir, Vector2.right);
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        if (player != null){
+            Vector2 dir = (player.transform.position - transform.position).normalized;
+            float angle = -1 * Vector2.SignedAngle(dir, Vector2.right);
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
