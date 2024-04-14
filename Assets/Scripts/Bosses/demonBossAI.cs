@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class demonBossAI : MonoBehaviour
+public class demonBossAI : bossTemplate
 {
     bool canAttack = true;
     bool isSwooping = false;
     bool isScorchingRay = false;
 
-
     bool swoopLeftToRight = true;
-    float attackCooldown = 3.0f;
+    float attackCooldown = 1.5f;
     float swoopCooldown = 1.5f;
 
     float scorchingRayDuration = 2.25f;
+    float attackDamage = 1f;
 
     float bossFacingBeamOffset = 4.75f;
-    float movementSpeed = 15.0f;
+    public float movementSpeed = 30f;
     float bossHealth = 100f;
 
     // Transforms to act as start and end markers for the journey.
-    public Transform point1;
-    public Transform point2;
+    public List<Transform> movePoints;
 
     // Time when the movement started.
     private float startTime;
@@ -33,43 +32,23 @@ public class demonBossAI : MonoBehaviour
     public int numberOfPossibleManuevers = 2;
 
     // Reference to the fire ray prefab
-    public GameObject fireBeamPrefab;
+    public Laser laserPrefab;
 
     public GameObject player;
 
     private Rigidbody2D rb;
 
-
-    private IEnumerator ResetBoolAfterDelay()
-    {
-        // Wait for cooldown second
-        yield return new WaitForSeconds(attackCooldown);
-
-        canAttack = true;
-    }
-
-    private IEnumerator SwoopDash()
-    {
-        // Wait for cooldown second
-        yield return new WaitForSeconds(swoopCooldown);
-
-        isSwooping = false;
-    }
-
-    // private IEnumerator FireBeamDuration()
-    // {
-    //     // Wait for cooldown second
-    //     yield return new WaitForSeconds(scorchingRayCooldown);
-
-    //     isScorchingRay = false;
-    // }
-
+    Transform destination = null;
+    Transform source = null;
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
+        base.Start();
         rb = GetComponent<Rigidbody2D>();
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+
+        player = FindAnyObjectByType<PlayerController>().gameObject;
     }
 
     // Update is called once per frame
@@ -96,22 +75,12 @@ public class demonBossAI : MonoBehaviour
         {
             //StartCoroutine(SwoopDash());
             Debug.Log("swooping");
-            // Distance moved equals elapsed time multiplied by move speed
+
             float distCovered = (Time.time - startTime) * movementSpeed;
-            // Fraction of journey completed equals current distance divided by total distance.
+
             float fractionOfJourney = distCovered / journeyLength;
-            // Set our position as a fraction of the distance between the markers.
-            //either swooping left to right
-            if (swoopLeftToRight == true)
-            {
-                transform.position = Vector3.Lerp(point1.position, point2.position, fractionOfJourney);
-            }
-            else //or right to left
-            {
-                transform.position = Vector3.Lerp(point2.position, point1.position, fractionOfJourney);
-            }
 
-
+            transform.position = Vector2.Lerp(source.position, destination.position, fractionOfJourney * Time.deltaTime);
         }
         //scorching beam lazer thing
         else if (isScorchingRay)
@@ -120,6 +89,10 @@ public class demonBossAI : MonoBehaviour
         }
     }
 
+    private void Die()
+    {
+
+    }
 
     void attack()
     {
@@ -144,7 +117,6 @@ public class demonBossAI : MonoBehaviour
                     swoopLeftToRight = false;
                 }
                 swoopingAttack();
-                //swoopingAttack();
 
                 break;
 
@@ -164,102 +136,47 @@ public class demonBossAI : MonoBehaviour
                 Debug.Log("boss: default");
                 //shouldn't get here
                 break;
-
-
-
-
         }
 
     }
 
-
     void swoopingAttack()
     {
-        //need to move to starting position
-        //randomly select either side of map
+        while (destination == null || destination.position.Equals(source.position))
+        {
+            destination = movePoints[Random.Range(0, movePoints.Count)];
+            source = transform;
+        }
 
         // Keep a note of the time the movement started.
         startTime = Time.time;
 
-        // Calculate the journey length.
-        journeyLength = Vector3.Distance(point1.position, point2.position);
-        isSwooping = true;
-        //reset swoop once done
-        StartCoroutine(SwoopDash());
+        journeyLength = Vector3.Distance(destination.position, source.position);
 
+        isSwooping = true;
+        StartCoroutine(SwoopDash());
     }
 
     void scorchingRayAttack()
     {
-        //face player?
-        //transform.right = player.transform.position - transform.position;   
-        //instantiate beam object pointing towards player
-        //transform.LookAt(player.transform);
-        //will be positive is player is to right of boss
-        float turnDirection = player.transform.position.x - transform.position.x;
-        //Debug.Log(player.transform.position);
-        Vector3 turningOffset = new Vector3(bossFacingBeamOffset, 0.0f, 0.0f);
-        // if (turnDirection <= 0)
-        // {
-        //     //shoot left
-        //     //instantiate flame beam to the left
-        //     var beam = Instantiate(fireBeamPrefab, (transform.position - turningOffset), Quaternion.identity);
-        //     Vector3 directionToPlayer = player.transform.position - transform.position;
-        //     beam.transform.rotation = Quaternion.LookRotation(directionToPlayer);
-        //     //beam.transform.rotation = Quaternion.RotateTowards(transform.rotation, player.transform.rotation, 360);
-        //     //beam.transform.rotation.SetFromToRotation(transform.position, player.transform.position);
-        //     //beam.transform.right = player.transform.position - beam.transform.position;
-        //     //destroy beam after duration
-        //     Destroy(beam, scorchingRayDuration);
-        // }
-        // else if (turnDirection > 0)
-        // {
-        //     //shoot right
-        //     //instantiate flame beam to the left
-        //     var beam = Instantiate(fireBeamPrefab, (transform.position + turningOffset), Quaternion.identity);
-        //     //beam.transform.rotation = Quaternion.RotateTowards(transform.rotation, player.transform.rotation, 180);
-        //     //destroy beam after duration
-        //     Destroy(beam, scorchingRayDuration);
-        // }
-        var beam = Instantiate(fireBeamPrefab, (transform.position - turningOffset), Quaternion.identity);
-        //Vector3 directionToPlayer = player.transform.position - transform.position;
-        //beam.transform.rotation = 
-        Quaternion.RotateTowards(transform.rotation, player.transform.rotation, 360);
-        //beam.transform.rotation = Quaternion.LookRotation(directionToPlayer);
-        //beam.transform.LookAt(player.transform);
-        //Euler.angle
-
-        Vector3 direction = player.transform.position - beam.transform.position;
-
-        // Set the local right direction of this object to point towards the target
-        //beam.transform.right = direction.normalized;
-
-
-        // Rotate the forward vector towards the target direction by one step
-        //Vector3 targetDirection = player.transform.position - transform.position;
-        //Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 1.0f, 0.0f);
-
-        // Calculate a rotation a step closer to the target and applies rotation to this object
-        //beam.transform.rotation = Quaternion.LookRotation(newDirection);
-        //beam.transform.LookAt(player.transform.position);
-
-        // Rotate the forward vector towards the target direction by one step
-        Vector3 newDirection = Vector3.RotateTowards(transform.forward, direction, 100.0f, 0.0f);
-
-        // Draw a ray pointing at our target in
-        Debug.DrawRay(transform.position, newDirection, Color.red);
-
-        // Calculate a rotation a step closer to the target and applies rotation to this object
-        beam.transform.rotation = Quaternion.LookRotation(newDirection);
-        float zsave = beam.transform.rotation.x;
-        beam.transform.Rotate(0.0f, 0.0f, zsave, Space.World);
-        //beam.transform.rotation.x = 0;
-        // beam.transform.rotation.y = 0;
-        // beam.transform.rotation.z = zsave;
-        Destroy(beam, scorchingRayDuration);
-
-
-
+        Laser beam = Instantiate(laserPrefab, transform.position, transform.rotation);
+        beam.Fire(player.GetComponent<PlayerController>(), attackDamage);
     }
 
+    private IEnumerator ResetBoolAfterDelay()
+    {
+        // Wait for cooldown second
+        yield return new WaitForSeconds(attackCooldown);
+
+        canAttack = true;
+    }
+
+    private IEnumerator SwoopDash()
+    {
+        // Wait for cooldown second
+        yield return new WaitForSeconds(swoopCooldown);
+
+        isSwooping = false;
+        destination = null;
+    }
 }

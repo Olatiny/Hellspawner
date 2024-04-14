@@ -11,6 +11,12 @@ public class GameManager : MonoBehaviour
 
     public bool LichBeatBool = false;
 
+    [SerializeField]
+    private Canvas mainMenuCanv;
+
+    [SerializeField]
+    private Canvas bossSelectCanv;
+
     public static GameManager _instance;
     [SerializeField]
     private int playerHealth = 5;
@@ -29,7 +35,7 @@ public class GameManager : MonoBehaviour
 
 
     private void Awake(){
-        
+        bossSelectCanv.enabled = false;
 	    if (_instance != null && _instance != this){
 		    Destroy(this.gameObject);
 	    }
@@ -89,6 +95,8 @@ public class GameManager : MonoBehaviour
 
     public void LoseGame(){
         //lose game means reset
+        bossSelectCanv.enabled = false;
+        mainMenuCanv.enabled = true;
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -118,33 +126,40 @@ public class GameManager : MonoBehaviour
 
     public void startEasyGame(){
         setEasyDifficulty();
+        mainMenuCanv.enabled = false;
         SceneManager.LoadScene("BossSelect");
     }
 
     public void startHardGame(){
         setHardDifficulty();
+        mainMenuCanv.enabled = false;
         SceneManager.LoadScene("BossSelect");
     }
 
     public void startExtremeGame(){
         setExtremeDifficulty();
+        mainMenuCanv.enabled = false;
         SceneManager.LoadScene("BossSelect");
     }
 
     public void startDemonBossFight(){
-        //SceneManager.LoadScene("");
+        bossSelectCanv.enabled = false;
+        SceneManager.LoadScene("grantBossTestScene");
     }
 
     public void startLichBossFight(){
+        bossSelectCanv.enabled = false;
         SceneManager.LoadScene("lichScene");
     }
 
     public void startFrostWardenBossFight(){
+        bossSelectCanv.enabled = false;
         SceneManager.LoadScene("frostwardenScene");
     }
 
     //method for hidden boss fight button
     public void startHiddenBossFight(){
+        bossSelectCanv.enabled = false;
         if (DemonDefeatedBeatBool && FrostWardenBeatBool && LichBeatBool){
             //SceneManager.LoadScene("hiddenBoss");
         }
