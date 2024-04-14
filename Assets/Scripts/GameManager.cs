@@ -127,18 +127,21 @@ public class GameManager : MonoBehaviour
     public void startEasyGame(){
         setEasyDifficulty();
         mainMenuCanv.enabled = false;
+        bossSelectCanv.enabled = true;
         SceneManager.LoadScene("BossSelect");
     }
 
     public void startHardGame(){
         setHardDifficulty();
         mainMenuCanv.enabled = false;
+        bossSelectCanv.enabled = true;
         SceneManager.LoadScene("BossSelect");
     }
 
     public void startExtremeGame(){
         setExtremeDifficulty();
         mainMenuCanv.enabled = false;
+        bossSelectCanv.enabled = true;
         SceneManager.LoadScene("BossSelect");
     }
 
