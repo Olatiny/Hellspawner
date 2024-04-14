@@ -228,6 +228,9 @@ public class PlayerController : MonoBehaviour
 
     public void Frost(CallbackContext context)
     {
+        if( gameManagerRef.paused )
+            return;
+
         if (context.performed && canSpawnFrost)
         {
             StartCoroutine(FrostTimer(frostTime, frostCooldown));
