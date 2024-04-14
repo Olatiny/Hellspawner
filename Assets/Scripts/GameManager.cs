@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviour
     public bool LichDefeated = false;
 
     public static GameManager Instance;
+    [SerializeField]
+    private Canvas mainMenuCanv;
+
+    [SerializeField]
+    private Canvas bossSelectCanv;
 
     [SerializeField]
     private int playerHealth = 5;
@@ -29,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-
+        bossSelectCanv.enabled = false;
         if (Instance != null && Instance != this)
         {
             Destroy(this.gameObject);
@@ -177,7 +182,7 @@ public class GameManager : MonoBehaviour
     //method for hidden boss fight button
     public void startHiddenBossFight(){
         bossSelectCanv.enabled = false;
-        if (DemonDefeatedBeatBool && FrostWardenBeatBool && LichBeatBool){
+        if (DemonDefeated && FrostWardenDefeated && LichDefeated){
             //SceneManager.LoadScene("hiddenBoss");
         }
 
