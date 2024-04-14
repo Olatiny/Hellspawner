@@ -126,6 +126,7 @@ public class GameManager : MonoBehaviour
 
     public void startEasyGame(){
         setEasyDifficulty();
+        bossSelectCanv.enabled = true;
         mainMenuCanv.enabled = false;
         bossSelectCanv.enabled = true;
         SceneManager.LoadScene("BossSelect");
