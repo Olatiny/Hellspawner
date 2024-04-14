@@ -17,6 +17,11 @@ public class LichBoss : Boss
 
     private Rigidbody2D rb;
 
+    [SerializeField]
+    private LichBossProjectile lichprojectileprefab; //projectile prefab ref
+
+    float attackDamage = 1f;
+
     
     // Start is called before the first frame update
     void Start()
@@ -49,6 +54,8 @@ public class LichBoss : Boss
         Debug.Log(teleportIndex);
         //teleport to new spot if new
         teleport(lastPosition, teleportPoints[teleportIndex]);
+        //and shoot projectile at player
+        skullProjectileAttack();
     }
 
     void teleport(Transform lastPosition, Transform newPosition){
@@ -77,5 +84,11 @@ public class LichBoss : Boss
         yield return new WaitForSeconds(attackCooldown);
 
         canAttack = true;
+    }
+
+    void skullProjectileAttack()
+    {
+        LichBossProjectile lichprojectile = Instantiate(lichprojectileprefab, transform.position, transform.rotation);
+        lichprojectile.Fire(player.GetComponent<PlayerController>(), attackDamage);
     }
 }

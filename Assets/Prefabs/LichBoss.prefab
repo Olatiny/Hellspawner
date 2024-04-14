@@ -162,6 +162,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23c8adf26dfe474299030905b0aaca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossMaxHealth: 100
+  bossCurrentHealth: 0
+  player: {fileID: 0}
+  teleportPoints: []
+  lichprojectileprefab: {fileID: 0}
 --- !u!1 &5852186238456700103
 GameObject:
   m_ObjectHideFlags: 0

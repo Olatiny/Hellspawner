@@ -12,7 +12,13 @@ public class PlayerHealth : MonoBehaviour
     GameManager gameManager;
     List<GameObject> hearts = new();
 
-    private void Start()
+    // private void Start()
+    // {
+    //     gameManager = GameManager.Instance;
+    // }
+
+    //using instead of start because it was null reffing
+    private void Awake()
     {
         gameManager = GameManager.Instance;
     }
