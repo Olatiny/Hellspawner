@@ -44,3 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ad11fa49f0d014ab2128c05ef9b28e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DemonDefeatedBeatBool: 0
+  FrostWardenBeatBool: 0
+  LichBeatBool: 0
+  playerHealth: 10
+  maxPlayerHealth: 10
+  levelDifficulty: 0

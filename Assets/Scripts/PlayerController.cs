@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float frostCooldown = 4f;
     [SerializeField] private float slowDownTime = 2f;
 
-    private GameManager gameManagerRef;
+    private GameManager gameManager;
 
     private PlayerInput playerInput;
     private PlayerInputActions inputActions;
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
         myRigidBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
-        gameManagerRef = FindObjectOfType<GameManager>();
+        gameManager = GameManager.Instance;
 
         playerInput = GetComponent<PlayerInput>();
         inputActions = new();
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damageAmt)
     {
-        gameManagerRef.playerTakeDamage(damageAmt);
+        gameManager.PlayerTakeDamage(damageAmt);
     }
 
     public void JumpInput(CallbackContext context)
@@ -188,7 +188,7 @@ public class PlayerController : MonoBehaviour
         if (projectiles.Count >= maxProjectiles || attackCooldown)
             return;
 
-        if (context.performed /* && can use charge attack */)
+        if (context.performed && gameManager.DemonDefeated)
         {
             chargeAttackRoutine = StartCoroutine(ChargeAttackTimer(maxChargeTime));
         }
@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
 
     public void Dash(CallbackContext context)
     {
-        if (!context.performed || !canDash)
+        if (!context.performed || !canDash || !gameManager.LichDefeated)
             return;
 
         canDash = false;
@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
 
     public void Frost(CallbackContext context)
     {
-        if (context.performed && canSpawnFrost)
+        if (context.performed && canSpawnFrost && gameManager.FrostWardenDefeated)
         {
             StartCoroutine(FrostTimer(frostTime, frostCooldown));
         }
