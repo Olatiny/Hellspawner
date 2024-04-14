@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
         }
         //normal mode don't update health
         //hard mode die on hit
+
     }
 
     void Update()
@@ -250,18 +251,24 @@ public class GameManager : MonoBehaviour
     {
         fighting = true;
         SceneManager.LoadScene(demonScene);
+        //show ability ui
+        playerHealthUI.GetComponent<PlayerHealth>().AddAbilityGUI();
     }
 
     public void startLichBossFight()
     {
         fighting = true;
         SceneManager.LoadScene(lichScene);
+        //show ability ui
+        playerHealthUI.GetComponent<PlayerHealth>().AddAbilityGUI();
     }
 
     public void startFrostWardenBossFight()
     {
         fighting = true;
         SceneManager.LoadScene(frostScene);
+        //show ability ui
+        playerHealthUI.GetComponent<PlayerHealth>().AddAbilityGUI();
     }
 
     //method for hidden boss fight button
