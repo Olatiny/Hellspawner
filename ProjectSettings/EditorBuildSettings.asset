@@ -20,5 +20,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/frostwardenScene.unity
     guid: ee8cc2ef7c2e6834a8a232dfdbe873f1
+  - enabled: 1
+    path: Assets/Scenes/grantBossTestScene.unity
+    guid: b73ae2ea87c7c284bbd63c84d7659760
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 910708c518e6db5488ee8cf309b012bc, type: 2}
