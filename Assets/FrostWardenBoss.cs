@@ -29,11 +29,15 @@ public class FrostWardenBoss : Boss
     [SerializeField] private float frostTime = 2f;
     [SerializeField] private float frostCooldown = 4f;
     [SerializeField] private float slowDownTime = 2f;
+    [SerializeField] Transform icicleYSpawnLevel;
+    [SerializeField] private float icicleRandomSpread = 1.5f;
 
     private GameManager gameManager;
 
     private Rigidbody2D myRigidBody;
     private Collider2D myCollider;
+
+    public WardenBossProjectile iciclePrefab;
 
     bool grounded = true;
     bool attackCooldown = false;
@@ -42,6 +46,7 @@ public class FrostWardenBoss : Boss
     bool canAttack = true;
     bool bufferingJump = false;
     bool moving = false;
+    bool jumping = false;
 
     protected override void Start()
     {
@@ -139,6 +144,8 @@ public class FrostWardenBoss : Boss
         // come back to this if you decide to give player acceleration
 
         myRigidBody.velocity = (slowed ? jumpVelocity / 1.4f : jumpVelocity) * Vector2.up;
+
+        StartCoroutine(JumpingBoolCooldown());
     }
 
     private void StartSwing()
@@ -157,5 +164,33 @@ public class FrostWardenBoss : Boss
 
         yield return new WaitForSeconds(coolDownTime);
         canAttack = true;
+    }
+
+    IEnumerator JumpingBoolCooldown()
+    {
+        //let frost warden leave ground then set jumping to true for ground return/icicle summon
+        yield return new WaitForSeconds(.5f);
+        jumping = true; //set jumping to true for icicle
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") && jumping && grounded)
+        {
+            //check for ground hit once jumping
+            jumping = false;
+            createIcicle();
+        }
+        base.OnTriggerEnter2D(collision);
+    }
+
+    private void createIcicle(){
+
+        Debug.Log("icicleTime");
+        float Ylevel = icicleYSpawnLevel.position.y;
+        float xLevel = transform.position.x + UnityEngine.Random.Range(-icicleRandomSpread, icicleRandomSpread);;
+        Vector3 icicleSpawnPoint = new Vector3(xLevel, Ylevel, 0);
+        WardenBossProjectile icicleFalling = Instantiate(iciclePrefab, icicleSpawnPoint, transform.rotation);
+        
     }
 }
