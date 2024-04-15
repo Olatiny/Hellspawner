@@ -6,12 +6,18 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private GameObject happyHeart;
     [SerializeField] private GameObject sadHeart;
-    [SerializeField] private float spriteWidth;
+    [SerializeField] private float heartWidth;
+    [SerializeField] private float abilityWidth;
     [SerializeField] private Transform startHeartsHere;
     [SerializeField] private Transform startAbilitiesHere;
     [SerializeField] private GameObject demonAbility;
     [SerializeField] private GameObject frostAbility;
     [SerializeField] private GameObject lichAbility;
+    [SerializeField] private Image playerImage;
+
+    [SerializeField] private Sprite happySprite;
+    [SerializeField] private Sprite sadSprite;
+
     GameManager gameManager;
     List<GameObject> hearts = new();
     List<GameObject> abilityIndicators = new();
@@ -40,12 +46,17 @@ public class PlayerHealth : MonoBehaviour
         int currHealth = gameManager.playerHealth;
         int maxHealth = gameManager.maxPlayerHealth;
 
+        if (currHealth < maxHealth / 2)
+            playerImage.sprite = sadSprite;
+        else
+            playerImage.sprite = happySprite;
+
         foreach (GameObject heart in hearts)
             Destroy(heart);
 
         for (int i = 0; i < maxHealth; i++)
         {
-            Vector3 pos = startHeartsHere.position + new Vector3(i * spriteWidth, 0);
+            Vector3 pos = startHeartsHere.position + new Vector3(i * heartWidth, 0);
             hearts.Add(Instantiate(i < currHealth ? happyHeart : sadHeart, pos, transform.rotation, transform));
         }
     }
@@ -62,19 +73,19 @@ public class PlayerHealth : MonoBehaviour
         }
             
         int index = 0;
-        Vector3 pos = startAbilitiesHere.position + new Vector3(index * spriteWidth, 0);
+        Vector3 pos = startAbilitiesHere.position + new Vector3(index * abilityWidth, 0);
         if (gameManager.lichStatus()){
             Debug.Log("lichUISet");
             abilityIndicators.Add(Instantiate(lichAbility, pos, transform.rotation, transform));
             index++; //increment index so stuff doesn't overlap
         }
-        pos = startAbilitiesHere.position + new Vector3(index * spriteWidth, 0);
+        pos = startAbilitiesHere.position + new Vector3(index * abilityWidth, 0);
         if (gameManager.frostWardenStatus()){
             Debug.Log("frostUISet");
             abilityIndicators.Add(Instantiate(frostAbility, pos, transform.rotation, transform));
             index++; //increment index so stuff doesn't overlap
         }
-        pos = startAbilitiesHere.position + new Vector3(index * spriteWidth, 0);
+        pos = startAbilitiesHere.position + new Vector3(index * abilityWidth, 0);
         if (gameManager.demonStatus()){
             Debug.Log("demonUISet"); 
             //instantiate with icon for always ready/active

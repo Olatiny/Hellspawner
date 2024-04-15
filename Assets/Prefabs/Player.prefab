@@ -268,7 +268,7 @@ MonoBehaviour:
   maxHealth: 6
   currentHealth: 0
   gravity: 75
-  jumpVelocity: 15
+  jumpVelocity: 20
   jumpHoldTime: 0.15
   walkSpeed: 10
   maxFallSpeed: 20

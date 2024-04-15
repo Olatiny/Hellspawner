@@ -508,18 +508,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: FrostWardenFight
       objectReference: {fileID: 0}
-    - target: {fileID: 6374369809581348784, guid: 327965473efbbc24691861b44240cdd5, type: 3}
-      propertyPath: walktimeMax
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6374369809581348784, guid: 327965473efbbc24691861b44240cdd5, type: 3}
-      propertyPath: walktimeMin
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6374369809581348784, guid: 327965473efbbc24691861b44240cdd5, type: 3}
-      propertyPath: coolDownTime
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8598224076260001969, guid: 327965473efbbc24691861b44240cdd5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.2981634
@@ -716,7 +704,7 @@ GameObject:
   - component: {fileID: 1468949933}
   m_Layer: 0
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

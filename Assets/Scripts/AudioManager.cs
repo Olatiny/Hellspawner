@@ -256,7 +256,10 @@ public class AudioManager : MonoBehaviour
     private void SFX(List<AudioClip> list, float vol = 0.5f)
     {
         if (list.Count == 0)
+        {
             Debug.Log("UNIMPLEMENTED SOUND EFFECT");
+            return;
+        }
 
         sfx.PlayOneShot(list[ Random.Range(0, list.Count) ], vol);
     }
