@@ -148,7 +148,10 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damageAmt)
     {
         if (!dashing)
+        {
             gameManager.PlayerTakeDamage(damageAmt);
+            AudioManager.Instance?.DamageSFX();
+        }
     }
 
     public void JumpInput(CallbackContext context)
@@ -183,6 +186,8 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        AudioManager.Instance?.JumpSFX();
+
         bufferingJump = false;
         holdingJump = true;
 
@@ -205,6 +210,8 @@ public class PlayerController : MonoBehaviour
         }
         else if (context.canceled)
         {
+            AudioManager.Instance?.ShootGloopSFX();
+
             myAnimator.SetTrigger("Shoot");
             PlayerProjectile goop = Instantiate(projectilePrefab, transform.position + (Vector3)(direction * projectileSpawnDist), transform.rotation);
             goop.SendProjectile(this, projectileSpeed, direction.normalized, currentAttackDamage);

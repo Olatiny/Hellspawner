@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 277517991188865745}
   - component: {fileID: 7025768637808805926}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 5757786763402943049}
   - component: {fileID: 416662382444938515}
   - component: {fileID: 4487633628630780956}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Laser
   m_TagString: Laser
   m_Icon: {fileID: 0}

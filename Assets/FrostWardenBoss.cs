@@ -20,6 +20,7 @@ public class FrostWardenBoss : Boss
 
     [Header("Attack Stuff")]
     [SerializeField] float coolDownTime = .5f;
+    [SerializeField] float cloudSeconds = 2f;
 
     enum ActionTypes { Move, Jump };
     ActionTypes chosenAction;
@@ -36,6 +37,7 @@ public class FrostWardenBoss : Boss
 
     private Rigidbody2D myRigidBody;
     private Collider2D myCollider;
+    private Animator myAnimator;
 
     public WardenBossProjectile iciclePrefab;
 
@@ -54,12 +56,18 @@ public class FrostWardenBoss : Boss
 
         myRigidBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
+        myAnimator = GetComponent<Animator>();
     }
 
     private void Update()
     {
         if (canAttack)
             Action();
+
+        if (walkDirection.x < 0)
+            GetComponent<SpriteRenderer>().flipX = true;
+        else
+            GetComponent<SpriteRenderer>().flipX = false;
 
         // Gravity if not jumping
         if (myRigidBody.velocity.y > -maxFallSpeed)
@@ -73,6 +81,8 @@ public class FrostWardenBoss : Boss
         // Buffer Jump
         if (bufferingJump)
             Jump();
+
+        myAnimator.SetBool("Walking", moving);
 
         if (!moving)
             return;
@@ -135,11 +145,14 @@ public class FrostWardenBoss : Boss
 
         bufferingJump = true;
 
+        myAnimator.SetBool("Jumping", true);
         StartMove();
     }
 
     public void Jump()
     {
+        AudioManager.Instance?.TrollJumpSFX();
+
         bufferingJump = false;
         // come back to this if you decide to give player acceleration
 
@@ -158,7 +171,7 @@ public class FrostWardenBoss : Boss
     IEnumerator AttackCooldown(float bonusCooldownTime = 0)
     {
         yield return new WaitForSeconds(bonusCooldownTime);
-        walkDirection = Vector2.zero;
+        //walkDirection = Vector2.zero;
         moving = false;
         myRigidBody.velocity = new(0, myRigidBody.velocity.y);
 
@@ -173,15 +186,22 @@ public class FrostWardenBoss : Boss
         jumping = true; //set jumping to true for icicle
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    //protected override void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    base.OnTriggerEnter2D(collision);
+    //}
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground") && jumping && grounded)
+        if (collision.gameObject.CompareTag("Ground") && jumping)
         {
             //check for ground hit once jumping
+            AudioManager.Instance?.TrollLandingSFX();
             jumping = false;
+            myAnimator.SetBool("Jumping", false);
             createIcicle();
         }
-        base.OnTriggerEnter2D(collision);
+        base.OnCollisionEnter2D(collision);
     }
 
     private void createIcicle(){
@@ -190,7 +210,19 @@ public class FrostWardenBoss : Boss
         float Ylevel = icicleYSpawnLevel.position.y;
         float xLevel = transform.position.x + UnityEngine.Random.Range(-icicleRandomSpread, icicleRandomSpread);;
         Vector3 icicleSpawnPoint = new Vector3(xLevel, Ylevel, 0);
-        WardenBossProjectile icicleFalling = Instantiate(iciclePrefab, icicleSpawnPoint, transform.rotation);
-        
+        WardenBossProjectile icicleFalling = Instantiate(iciclePrefab, icicleSpawnPoint, transform.rotation); 
+    }
+
+    public void IcicleCloud(FrostAOE aoe)
+    {
+        aoe.owner = gameObject;
+
+        StartCoroutine(KillCloud(aoe));
+    }
+
+    IEnumerator KillCloud(FrostAOE aoe)
+    {
+        yield return new WaitForSeconds(cloudSeconds);
+        Destroy(aoe.gameObject);
     }
 }

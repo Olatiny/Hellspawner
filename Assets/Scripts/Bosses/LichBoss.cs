@@ -37,6 +37,8 @@ public class LichBoss : Boss
 
     int lastIndexOfTeleport;
 
+    Animator myAnimator;
+
     
     // Start is called before the first frame update
     void Start()
@@ -44,6 +46,7 @@ public class LichBoss : Boss
         base.Start();
         rb = GetComponent<Rigidbody2D>();
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+        myAnimator = GetComponent<Animator>();
 
         player = FindAnyObjectByType<PlayerController>().gameObject;
     }
@@ -75,6 +78,8 @@ public class LichBoss : Boss
     }
 
     void teleport(Transform lastPosition, Transform newPosition){
+        AudioManager.Instance?.LichTeleportSFX();
+
         Debug.Log("teleporting lich boss");
         //lastpos will be null if lich hasn't teleported yet
         if (lastPosition == null){
@@ -99,13 +104,25 @@ public class LichBoss : Boss
         if (slowed){
             yield return new WaitForSeconds(lichSlowTeleDelay);
         }
+
+        myAnimator.SetBool("Attacking", true);
+        int numExtraSkulls = Random.Range(0, 3);
+        for (int i = 0; i < numExtraSkulls; i++)
+        {
+            skullProjectileAttack();
+            yield return new WaitForSeconds(attackCooldown * (i + 1)/numExtraSkulls);
+        }
+
         // Wait for cooldown second
-        yield return new WaitForSeconds(attackCooldown);
+        myAnimator.SetBool("Attacking", false);
+        yield return new WaitForSeconds(attackCooldown * .4f);
         canAttack = true;
     }
 
     void skullProjectileAttack()
     {
+        AudioManager.Instance?.SkullShootSFX();
+
         LichBossProjectile lichprojectile = Instantiate(lichprojectileprefab, transform.position, transform.rotation);
         lichprojectile.Fire(player.GetComponent<PlayerController>(), attackDamage, (slowed ? lichProjSpeedSlowed : lichProjSpeedRegular));
         //lichprojectile.Fire(player.GetComponent<PlayerController>(), attackDamage, lichProjSpeedRegular);

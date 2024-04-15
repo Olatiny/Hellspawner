@@ -54,6 +54,8 @@ public class PlayerProjectile : MonoBehaviour
 
     public void KillProjectile()
     {
+        AudioManager.Instance?.GloopImpactSFX();
+
         if (player.projectiles.Contains(this) && flying)
         {
             player.projectiles.Remove(this);

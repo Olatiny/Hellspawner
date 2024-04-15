@@ -21,6 +21,10 @@ public class WardenBossProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        AudioManager.Instance?.IcicleImpactSFX();
+        FrostAOE faoe = Instantiate<FrostAOE>(new(), transform.position, transform.rotation);
+        FindAnyObjectByType<FrostWardenBoss>()?.IcicleCloud(faoe);
+
         Debug.Log("LichSkullHitSum");
         if (collision.gameObject.CompareTag("Player"))
         {

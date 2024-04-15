@@ -53,6 +53,8 @@ public class LichBossProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        AudioManager.Instance?.SkullImpactSFX();
+
         Debug.Log("LichSkullHitSum");
         if (collision.gameObject.CompareTag("Player") && lethal)
         {
@@ -66,6 +68,7 @@ public class LichBossProjectile : MonoBehaviour
             Debug.Log("LichSkullPlayerAttackCOllsion");
             lethal = false;
             //player attack and skull collide, destroy skull
+            player.projectiles.Remove(collision.gameObject.GetComponent<PlayerProjectile>());
             Destroy(gameObject);
             Destroy(collision.gameObject);
         }
