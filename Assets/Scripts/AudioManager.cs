@@ -122,7 +122,7 @@ public class AudioManager : MonoBehaviour
         // Handle the idle gloop
         idleGloop = gameObject.AddComponent<AudioSource>();
         idleGloop.clip = idleGloopage;
-        idleGloop.volume = 0.3f;
+        idleGloop.volume = 0.6f;
         idleGloop.loop = true;
     }
 
@@ -151,33 +151,35 @@ public class AudioManager : MonoBehaviour
     public void TransitionMusicDefault()
     {
         // if an audio source is already silenced, then fading it should do nothing
-        StartCoroutine(Fade(musicDemonLayerSource, .1f, 0));
-        StartCoroutine(Fade(musicTrollLayerSource, .1f, 0));
-        StartCoroutine(Fade(musicLichLayerSource, .1f, 0));
+        StartCoroutine(Fade(musicDemonLayerSource, .2f, 0));
+        StartCoroutine(Fade(musicTrollLayerSource, .2f, 0));
+        StartCoroutine(Fade(musicLichLayerSource, .2f, 0));
         currentLayerSource = null;
     }
 
     public void TransitionMusicFire()
     {
-        StartCoroutine(Fade(musicDemonLayerSource, .1f, musicVolume));
-        StartCoroutine(Fade(musicTrollLayerSource, .1f, 0));
-        StartCoroutine(Fade(musicLichLayerSource, .1f, 0));
+        StartCoroutine(Fade(musicDemonLayerSource, .2f, musicVolume));
+        StartCoroutine(Fade(musicTrollLayerSource, .2f, 0));
+        StartCoroutine(Fade(musicLichLayerSource, .2f, 0));
         currentLayerSource = musicDemonLayerSource;
     }
 
     public void TransitionMusicIce()
     {
-        StartCoroutine(Fade(musicDemonLayerSource, .1f, 0));
-        StartCoroutine(Fade(musicTrollLayerSource, .1f, musicVolume));
-        StartCoroutine(Fade(musicLichLayerSource, .1f, 0));
+        StartCoroutine(Fade(musicDemonLayerSource, .2f, 0));
+        StartCoroutine(Fade(musicTrollLayerSource, .2f, musicVolume));
+        StartCoroutine(Fade(musicLichLayerSource, .2f, 0));
         currentLayerSource = musicTrollLayerSource;
     }
     public void TransitionMusicLich()
     {
-        StartCoroutine(Fade(musicDemonLayerSource, .1f, 0));
-        StartCoroutine(Fade(musicTrollLayerSource, .1f, 0));
-        StartCoroutine(Fade(musicLichLayerSource, .1f, musicVolume));
+        StartCoroutine(Fade(musicDemonLayerSource, .2f, 0));
+        StartCoroutine(Fade(musicTrollLayerSource, .2f, 0));
+        StartCoroutine(Fade(musicLichLayerSource, .2f, musicVolume));
         currentLayerSource = musicLichLayerSource;
+
+        Debug.Log("the organ and harspichord should be turned on now");
     }
 
     public void BeginIdleGloop()
@@ -209,8 +211,8 @@ public class AudioManager : MonoBehaviour
     }
 
     // Character 
-    public void JumpSFX() => SFX(jump);
-    public void ShootGloopSFX() => SFX(gloopShot);
+    public void JumpSFX() => SFX(jump); 
+    public void ShootGloopSFX() => SFX(gloopShot, 0.35f);
     public void GloopImpactSFX() => SFX(gloopImpact);
     public void DamageSFX() => SFX(damage);
 
