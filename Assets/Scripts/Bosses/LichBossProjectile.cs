@@ -10,7 +10,7 @@ public class LichBossProjectile : MonoBehaviour
     bool rotating = false;
     public PlayerController player;
     public float damageToDeal = 1f;
-    private float proj_Speed = 8.0f;
+    private float proj_Speed;
     private Vector2 direction;
 
     // Start is called before the first frame update
@@ -53,6 +53,8 @@ public class LichBossProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        AudioManager.Instance?.SkullImpactSFX();
+
         Debug.Log("LichSkullHitSum");
         if (collision.gameObject.CompareTag("Player") && lethal)
         {
@@ -66,15 +68,17 @@ public class LichBossProjectile : MonoBehaviour
             Debug.Log("LichSkullPlayerAttackCOllsion");
             lethal = false;
             //player attack and skull collide, destroy skull
+            player.projectiles.Remove(collision.gameObject.GetComponent<PlayerProjectile>());
             Destroy(gameObject);
             Destroy(collision.gameObject);
         }
     }
 
-    public void Fire(PlayerController player, float damage)
+    public void Fire(PlayerController player, float damage, float projSpeed)
     {
         this.player = player;
         damageToDeal = damage;
+        this.proj_Speed = projSpeed;
         //rotate towards player and shoot straight (not homing)
         StartCoroutine(FireSkull());
         

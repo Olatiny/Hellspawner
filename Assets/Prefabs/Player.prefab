@@ -268,7 +268,7 @@ MonoBehaviour:
   maxHealth: 6
   currentHealth: 0
   gravity: 75
-  jumpVelocity: 15
+  jumpVelocity: 20
   jumpHoldTime: 0.15
   walkSpeed: 10
   maxFallSpeed: 20
@@ -279,7 +279,7 @@ MonoBehaviour:
   maxProjectiles: 3
   projectileSpeed: 15
   defaultAttackDamage: 1
-  chargeAttackDamage: 3
+  chargeAttackDamage: 5
   maxChargeTime: 1.5
   attackCooldownTime: 0.1
   projectiles: []

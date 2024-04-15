@@ -17,7 +17,8 @@ public class Laser : MonoBehaviour
         if (!rotating)
             return;
 
-        if (player != null){
+        if (player != null)
+        {
             Vector2 dir = (player.transform.position - transform.position).normalized;
             float angle = -1 * Vector2.SignedAngle(dir, Vector2.right);
             transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -42,20 +43,20 @@ public class Laser : MonoBehaviour
 
     IEnumerator FireLaser()
     {
-        transform.GetComponentInChildren<SpriteRenderer>().color = Color.red * new Color(.3f, .3f, .3f);
+        transform.GetComponentInChildren<SpriteRenderer>().color = new Color(.3f, .3f, .3f);
         transform.localScale = new(1, .5f, 1);
         rotating = true;
 
         yield return new WaitForSeconds(chargeSeconds * .67f);
 
         rotating = false;
-        transform.GetComponentInChildren<SpriteRenderer>().color = Color.red * new Color(.6f, .6f, .6f);
+        transform.GetComponentInChildren<SpriteRenderer>().color = new Color(.6f, .6f, .6f);
 
         yield return new WaitForSeconds(chargeSeconds * .33f);
 
         lethal = true;
 
-        transform.GetComponentInChildren<SpriteRenderer>().color = Color.red;
+        transform.GetComponentInChildren<SpriteRenderer>().color = Color.white;
         transform.localScale = new(1, 1, 1);
 
         yield return new WaitForSeconds(activeSeconds);

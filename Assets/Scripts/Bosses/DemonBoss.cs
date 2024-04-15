@@ -44,6 +44,8 @@ public class DemonBoss : Boss
 
     Animator myAnimator;
 
+    Vector2 dir;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -68,7 +70,7 @@ public class DemonBoss : Boss
             return;
         if (player)
         {
-            Vector2 dir = player.transform.position - transform.position;
+            dir = player.transform.position - transform.position;
 
             if (dir.x < 0)
                 GetComponent<SpriteRenderer>().flipX = true;
@@ -165,6 +167,7 @@ public class DemonBoss : Boss
 
     void swoopingAttack()
     {
+        AudioManager.Instance?.HellChargeSFX();
         myAnimator.SetBool("Attacking", false);
 
         while (destination == null || destination.position.Equals(source.position))
@@ -184,9 +187,11 @@ public class DemonBoss : Boss
 
     void scorchingRayAttack()
     {
+        AudioManager.Instance?.ScorchRaySFX();
+
         myAnimator.SetBool("Attacking", true);
 
-        Laser beam = Instantiate(laserPrefab, transform.position, transform.rotation);
+        Laser beam = Instantiate(laserPrefab, transform.position + (dir.x < 0 ? new(-.5f, .5f) : new(.5f, .5f)), transform.rotation);
         beam.Fire(player.GetComponent<PlayerController>(), attackDamage);
     }
 

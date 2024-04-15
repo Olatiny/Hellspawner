@@ -17,9 +17,15 @@ public class Boss : MonoBehaviour
             GameManager.Instance.PlayerTakeDamage(1);
     }
 
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+            GameManager.Instance.PlayerTakeDamage(1);
+    }
+
     public void TakeDamage(float damage)
     {
-        bossCurrentHealth -= damage;
+        bossCurrentHealth -= (damage);
 
         GameManager.Instance.UpdateBossHealthBar(this);
 

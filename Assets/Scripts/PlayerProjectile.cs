@@ -44,11 +44,18 @@ public class PlayerProjectile : MonoBehaviour
         this.speed = speed;
         this.damage = damage;
 
+        if (direction.x < 0)
+            GetComponent<SpriteRenderer>().flipX = true;
+        else
+            GetComponent<SpriteRenderer>().flipX = false;
+
         flying = true;
     }
 
     public void KillProjectile()
     {
+        AudioManager.Instance?.GloopImpactSFX();
+
         if (player.projectiles.Contains(this) && flying)
         {
             player.projectiles.Remove(this);
