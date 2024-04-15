@@ -21,7 +21,7 @@ public class FrostWardenBoss : Boss
     [Header("Attack Stuff")]
     [SerializeField] float coolDownTime = .5f;
 
-    enum ActionTypes { Move, Jump, Attack };
+    enum ActionTypes { Move, Jump };
     ActionTypes chosenAction;
 
     [Header("Frost")]
@@ -104,9 +104,6 @@ public class FrostWardenBoss : Boss
                 break;
             case ActionTypes.Jump:
                 StartJump();
-                break;
-            case ActionTypes.Attack:
-                StartSwing();
                 break;
             default:
                 break;

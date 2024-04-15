@@ -208,7 +208,18 @@ public class PlayerController : MonoBehaviour
             myAnimator.SetTrigger("Shoot");
             PlayerProjectile goop = Instantiate(projectilePrefab, transform.position + (Vector3)(direction * projectileSpawnDist), transform.rotation);
             goop.SendProjectile(this, projectileSpeed, direction.normalized, currentAttackDamage);
+
+            float scaleFactor = (currentAttackDamage / chargeAttackDamage);
+
+            goop.transform.localScale += new Vector3(1, 1, 1) * scaleFactor * 2;
+            Color col = new Color(1, 1, 1) * (1 - scaleFactor);
+            col.a = col.g = 1;
+            //col.r = col.b = 1 - col.r;
+            goop.GetComponent<SpriteRenderer>().color *= col;
+
             projectiles.Add(goop);
+
+            GetComponent<SpriteRenderer>().color = Color.white;
 
             if (chargeAttackRoutine != null)
                 StopCoroutine(chargeAttackRoutine);
@@ -279,6 +290,12 @@ public class PlayerController : MonoBehaviour
         {
             currentAttackDamage = Mathf.Lerp(defaultAttackDamage, chargeAttackDamage, elapsedTime / seconds);
             elapsedTime += Time.deltaTime;
+
+            float scaleFactor = (currentAttackDamage / chargeAttackDamage);
+
+            Color col = new Color(1, 1, 1) * (1 - scaleFactor);
+            col.a = col.g = 1;
+            GetComponent<SpriteRenderer>().color = Color.white * col;
 
             yield return null;
         }
