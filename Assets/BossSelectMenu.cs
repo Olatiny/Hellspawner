@@ -50,12 +50,14 @@ public class BossSelectMenu : MonoBehaviour
     private void OnEnable()
     {
         GameManager gameManager = GameManager.Instance;
+        SetActive(false);
+
+        if (gameManager == null)
+            return;
 
         demonBtn.interactable = !gameManager.DemonDefeated;
         lichBtn.interactable = !gameManager.LichDefeated;
         frostBtn.interactable = !gameManager.FrostWardenDefeated;
-
-        SetActive(false);
     }
 
     public void SelectDemon()
