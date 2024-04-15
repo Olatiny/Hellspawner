@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FrostWardenBoss : Boss
@@ -30,7 +31,7 @@ public class FrostWardenBoss : Boss
     [SerializeField] private float frostTime = 2f;
     [SerializeField] private float frostCooldown = 4f;
     [SerializeField] private float slowDownTime = 2f;
-    [SerializeField] Transform icicleYSpawnLevel;
+    [SerializeField] List<Transform> icicleYSpawnLevels;
     [SerializeField] private float icicleRandomSpread = 1.5f;
 
     private GameManager gameManager;
@@ -204,13 +205,14 @@ public class FrostWardenBoss : Boss
         base.OnCollisionEnter2D(collision);
     }
 
-    private void createIcicle(){
+    private void createIcicle()
+    {
 
         Debug.Log("icicleTime");
-        float Ylevel = icicleYSpawnLevel.position.y;
-        float xLevel = transform.position.x + UnityEngine.Random.Range(-icicleRandomSpread, icicleRandomSpread);;
-        Vector3 icicleSpawnPoint = new Vector3(xLevel, Ylevel, 0);
-        WardenBossProjectile icicleFalling = Instantiate(iciclePrefab, icicleSpawnPoint, transform.rotation); 
+        foreach (Transform icicleYSpawnLevel in icicleYSpawnLevels)
+        {
+            WardenBossProjectile icicleFalling = Instantiate(iciclePrefab, icicleYSpawnLevel.position, transform.rotation);
+        }
     }
 
     public void IcicleCloud(FrostAOE aoe)

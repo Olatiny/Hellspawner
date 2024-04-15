@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 6952059842054833470}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 2.17, z: 1}
+  m_LocalPosition: {x: -0.0431, y: 0.0779, z: 0}
+  m_LocalScale: {x: 3.1630485, y: 7.8798285, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02f2c944231037547830abae6d544c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageToDeal: 1
+  aoePrefab: {fileID: 3248402227556359220, guid: ded795340006a49448f00a72737ba1e5, type: 3}
 --- !u!212 &4599694654178244498
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -158,16 +160,16 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0020508915, y: -0.00094518065}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.23703703, y: 0.23703703}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.24120763, y: 0.23071775}
   m_EdgeRadius: 0

@@ -301,9 +301,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3340430516602665653}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: ExtremeModeSFX
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: FXExtreme
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -908,7 +908,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1100,9 +1100,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3340430516602665653}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: ClickSFX
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: FXButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1248,6 +1248,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3281322139223035236}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ResetPlayerProgress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadBossSelect
         m_Mode: 1
         m_Arguments:
@@ -1258,9 +1270,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3340430516602665653}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: ClickSFX
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: FXButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1682,9 +1694,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3340430516602665653}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: ClickSFX
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: FXButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2303,9 +2315,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3340430516602665653}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: ClickSFX
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: FXButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2459,9 +2471,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3340430516602665653}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: ClickSFX
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: FXButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2603,9 +2615,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3340430516602665653}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: ClickSFX
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: FXButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3250,9 +3262,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3340430516602665653}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: ClickSFX
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: FXButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3396,9 +3408,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3340430516602665653}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: ClickSFX
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: FXButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3678,6 +3690,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3281322139223035236}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ResetPlayerProgress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadMainMenu
         m_Mode: 1
         m_Arguments:
@@ -3688,9 +3712,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3340430516602665653}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: ClickSFX
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: FXButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3747,7 +3771,7 @@ Transform:
   - {fileID: 5198777715389021981}
   - {fileID: 6727028871285380788}
   - {fileID: 8851603393431002768}
-  - {fileID: 833979993367632550}
+  - {fileID: 8769552925215738292}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3281322139223035236
@@ -3915,9 +3939,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3340430516602665653}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: ClickSFX
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: FXButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4207,9 +4231,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3340430516602665653}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: ClickSFX
+      - m_Target: {fileID: 3281322139223035236}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: FXButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4895,7 +4919,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1001 &7829138752448001311
+--- !u!1001 &2199975125412308493
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -4952,19 +4976,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0041ea2bbd8e91145a8c1101fa74bfac, type: 3}
---- !u!4 &833979993367632550 stripped
+--- !u!4 &8769552925215738292 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7436661605969801145, guid: 0041ea2bbd8e91145a8c1101fa74bfac, type: 3}
-  m_PrefabInstance: {fileID: 7829138752448001311}
+  m_PrefabInstance: {fileID: 2199975125412308493}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3340430516602665653 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4827058277660594090, guid: 0041ea2bbd8e91145a8c1101fa74bfac, type: 3}
-  m_PrefabInstance: {fileID: 7829138752448001311}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05356e7f492aed84aad90ccc17be28c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

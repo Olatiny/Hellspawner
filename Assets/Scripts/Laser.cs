@@ -11,6 +11,7 @@ public class Laser : MonoBehaviour
 
     bool lethal = false;
     bool rotating = false;
+    bool slowed = false;
 
     private void Update()
     {
@@ -29,30 +30,31 @@ public class Laser : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && lethal)
         {
-            GameManager.Instance.PlayerTakeDamage((int)damageToDeal);
+            FindAnyObjectByType<PlayerController>().TakeDamage((int)damageToDeal);
             lethal = false;
         }
     }
 
-    public void Fire(PlayerController player, float damage)
+    public void Fire(PlayerController player, float damage, bool slowed)
     {
         this.player = player;
         damageToDeal = damage;
-        StartCoroutine(FireLaser());
+        this.slowed = slowed;
+        StartCoroutine(FireLaser(slowed));
     }
 
-    IEnumerator FireLaser()
+    IEnumerator FireLaser(bool slowed)
     {
         transform.GetComponentInChildren<SpriteRenderer>().color = new Color(.3f, .3f, .3f);
         transform.localScale = new(1, .5f, 1);
         rotating = true;
 
-        yield return new WaitForSeconds(chargeSeconds * .67f);
+        yield return new WaitForSeconds(chargeSeconds * (slowed ? .67f * 2 : .67f));
 
         rotating = false;
         transform.GetComponentInChildren<SpriteRenderer>().color = new Color(.6f, .6f, .6f);
 
-        yield return new WaitForSeconds(chargeSeconds * .33f);
+        yield return new WaitForSeconds(chargeSeconds * (slowed ? .33f * 2 : .33f));
 
         lethal = true;
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WardenBossProjectile : MonoBehaviour
@@ -7,10 +5,13 @@ public class WardenBossProjectile : MonoBehaviour
 
     public float damageToDeal = 1f;
 
+    [SerializeField]
+    private FrostAOE aoePrefab;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -22,13 +23,11 @@ public class WardenBossProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         AudioManager.Instance?.IcicleImpactSFX();
-        FrostAOE faoe = Instantiate<FrostAOE>(new(), transform.position, transform.rotation);
-        FindAnyObjectByType<FrostWardenBoss>()?.IcicleCloud(faoe);
 
         Debug.Log("LichSkullHitSum");
         if (collision.gameObject.CompareTag("Player"))
         {
-            GameManager.Instance.PlayerTakeDamage((int)damageToDeal);
+            FindAnyObjectByType<PlayerController>().TakeDamage((int)damageToDeal);
             //any effect of hit?
             Destroy(gameObject);
         }
@@ -37,6 +36,13 @@ public class WardenBossProjectile : MonoBehaviour
             //player attack and icicle collide, destroy icicle
             Destroy(gameObject);
             Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            FrostAOE faoe = Instantiate(aoePrefab, transform.position, transform.rotation);
+            FindAnyObjectByType<FrostWardenBoss>()?.IcicleCloud(faoe);
+
+            Destroy(gameObject);
         }
     }
 }

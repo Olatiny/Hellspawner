@@ -39,9 +39,12 @@ public class LichBoss : Boss
 
     Animator myAnimator;
 
-    
+    [SerializeField]
+    private ParticleSystem particles;
+
+
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         base.Start();
         rb = GetComponent<Rigidbody2D>();
@@ -77,18 +80,24 @@ public class LichBoss : Boss
         skullProjectileAttack();
     }
 
-    void teleport(Transform lastPosition, Transform newPosition){
+    void teleport(Transform lastPosition, Transform newPosition)
+    {
         AudioManager.Instance?.LichTeleportSFX();
+
+        particles.Stop();
+        particles.Play();
 
         Debug.Log("teleporting lich boss");
         //lastpos will be null if lich hasn't teleported yet
-        if (lastPosition == null){
+        if (lastPosition == null)
+        {
             //update current position to new position
             this.transform.position = newPosition.position;
             //save current transform to lastposition
             lastPosition = this.transform;
         }
-        while (lastPosition == newPosition){
+        while (lastPosition == newPosition)
+        {
             newPosition = teleportPoints[Random.Range(0, teleportPoints.Count)];
         }
         //last spot isnt new spot so teleporta and save old spot
@@ -101,7 +110,8 @@ public class LichBoss : Boss
 
     private IEnumerator ResetBoolAfterDelay()
     {
-        if (slowed){
+        if (slowed)
+        {
             yield return new WaitForSeconds(lichSlowTeleDelay);
         }
 
@@ -110,7 +120,7 @@ public class LichBoss : Boss
         for (int i = 0; i < numExtraSkulls; i++)
         {
             skullProjectileAttack();
-            yield return new WaitForSeconds(attackCooldown * (i + 1)/numExtraSkulls);
+            yield return new WaitForSeconds(attackCooldown * (i + 1) / numExtraSkulls);
         }
 
         // Wait for cooldown second
@@ -135,20 +145,29 @@ public class LichBoss : Boss
         base.OnDeath();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("FrostAOE")){
+        if (collision.gameObject.CompareTag("FrostAOE"))
+        {
             StartCoroutine(SlowDown(slowDownTime));
         }
 
         base.OnTriggerEnter2D(collision);
     }
 
+    private void OnParticleCollision(GameObject other)
+    {
+        if (other.CompareTag("FrostAOE") && gameObject.GetComponent<FrostAOE>().owner != gameObject)
+            StartCoroutine(SlowDown(slowDownTime));
+    }
+
     IEnumerator SlowDown(float slowTime)
     {
         slowed = true;
+        GetComponent<SpriteRenderer>().color = Color.cyan;
         Debug.Log("lich: slowed");
         yield return new WaitForSeconds(slowTime);
+        GetComponent<SpriteRenderer>().color = Color.white;
         Debug.Log("lich: unslowed");
         slowed = false;
     }

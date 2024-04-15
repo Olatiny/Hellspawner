@@ -129,6 +129,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ResetPlayerProgress()
+    {
+        LichDefeated = DemonDefeated = FrostWardenDefeated = false;
+    }
+
     public void SetDifficulty(GameManager.Difficulty difficulty)
     {
         this.levelDifficulty = difficulty;
@@ -177,6 +182,16 @@ public class GameManager : MonoBehaviour
     public void setNormalDifficulty()
     {
         SetDifficulty(Difficulty.Normal);
+    }
+
+    public void FXButtonClick()
+    {
+        AudioManager.Instance.ClickSFX();
+    }
+
+    public void FXExtreme()
+    {
+        AudioManager.Instance.ExtremeModeSFX();
     }
 
     public void setHardDifficulty()

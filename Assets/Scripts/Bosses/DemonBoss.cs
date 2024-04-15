@@ -44,6 +44,11 @@ public class DemonBoss : Boss
 
     Vector2 dir;
 
+    bool slowed = false;
+
+    [SerializeField]
+    float slowTime = 2f;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -94,13 +99,25 @@ public class DemonBoss : Boss
 
             float fractionOfJourney = distCovered / journeyLength;
 
-            transform.position = Vector2.Lerp(source.position, destination.position, fractionOfJourney * Time.deltaTime);
+            transform.position = Vector2.Lerp(source.position, destination.position, fractionOfJourney * Time.deltaTime * (slowed ? .5f : 1f));
         }
         //scorching beam lazer thing
         else if (isScorchingRay)
         {
             //ray instantiated by scorching ray attack method
         }
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("FrostAOE"))
+            StartCoroutine(SlowTimer());
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        if (other.CompareTag("FrostAOE") && gameObject.GetComponent<FrostAOE>().owner != gameObject)
+            StartCoroutine(SlowTimer());
     }
 
     protected override void OnDeath()
@@ -141,17 +158,6 @@ public class DemonBoss : Boss
                 //execute attack
                 scorchingRayAttack();
                 break;
-
-            case 3:
-                Debug.Log("boss: third attackChosen");
-                //execute attack
-
-                break;
-
-            default:
-                Debug.Log("boss: default");
-                //shouldn't get here
-                break;
         }
 
     }
@@ -183,13 +189,13 @@ public class DemonBoss : Boss
         myAnimator.SetBool("Attacking", true);
 
         Laser beam = Instantiate(laserPrefab, transform.position + (dir.x < 0 ? new(-.5f, .5f) : new(.5f, .5f)), transform.rotation);
-        beam.Fire(player.GetComponent<PlayerController>(), attackDamage);
+        beam.Fire(player.GetComponent<PlayerController>(), attackDamage, slowed);
     }
 
     private IEnumerator ResetBoolAfterDelay()
     {
         // Wait for cooldown second
-        yield return new WaitForSeconds(attackCooldown);
+        yield return new WaitForSeconds(attackCooldown * (slowed ? 2 : 1));
 
         canAttack = true;
     }
@@ -197,9 +203,18 @@ public class DemonBoss : Boss
     private IEnumerator SwoopDash()
     {
         // Wait for cooldown second
-        yield return new WaitForSeconds(swoopCooldown);
+        yield return new WaitForSeconds(swoopCooldown * (slowed ? 2 : 1));
 
         isSwooping = false;
         destination = null;
+    }
+
+    IEnumerator SlowTimer()
+    {
+        slowed = true;
+        GetComponent<SpriteRenderer>().color = new Color(.47f, .5f, 1f);
+        yield return new WaitForSeconds(slowTime);
+        GetComponent<SpriteRenderer>().color = Color.white;
+        slowed = false;
     }
 }

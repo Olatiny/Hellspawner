@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 2557844934609066170}
   - component: {fileID: 8380322592420607149}
   m_Layer: 0
-  m_Name: DemonBoss
+  m_Name: HELLSCOURGE
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -315,6 +315,7 @@ MonoBehaviour:
   numberOfPossibleManuevers: 2
   laserPrefab: {fileID: 416662382444938515, guid: 5bf90eed67c01e14b85991c02ea42999, type: 3}
   player: {fileID: 0}
+  slowTime: 5
 --- !u!70 &6499815878061136622
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

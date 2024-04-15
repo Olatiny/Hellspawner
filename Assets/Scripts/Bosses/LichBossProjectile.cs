@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LichBossProjectile : MonoBehaviour
@@ -22,23 +21,24 @@ public class LichBossProjectile : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (flying){
+        if (flying)
+        {
             float step = proj_Speed * Time.fixedDeltaTime;
             transform.Translate(step * direction);
         }
 
         //send forward //update direction
-        
+
         //transform.position = Vector2.MoveTowards(transform.position, (Vector2)transform.position + Vector2.up, step);
 
-        
 
-        
+
+
         //var heading = 2 * (target.position - transform.position);
         // move sprite towards the target location
         //transform.position = Vector2.MoveTowards(transform.position, target, step);
 
-        
+
         // if (flying){
 
         // }
@@ -48,7 +48,7 @@ public class LichBossProjectile : MonoBehaviour
     private void Update()
     {
 
-        
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -58,7 +58,7 @@ public class LichBossProjectile : MonoBehaviour
         Debug.Log("LichSkullHitSum");
         if (collision.gameObject.CompareTag("Player") && lethal)
         {
-            GameManager.Instance.PlayerTakeDamage((int)damageToDeal);
+            FindAnyObjectByType<PlayerController>().TakeDamage((int)damageToDeal);
             lethal = false;
             //any effect of skull hit?
             Destroy(gameObject);
@@ -81,7 +81,7 @@ public class LichBossProjectile : MonoBehaviour
         this.proj_Speed = projSpeed;
         //rotate towards player and shoot straight (not homing)
         StartCoroutine(FireSkull());
-        
+
     }
 
     IEnumerator FireSkull()
@@ -97,8 +97,8 @@ public class LichBossProjectile : MonoBehaviour
         yield return new WaitForSeconds(activeSeconds);
         Destroy(gameObject);
 
-        
 
-        
+
+
     }
 }

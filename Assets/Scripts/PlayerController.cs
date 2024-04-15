@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [Header("Stats")]
     public int maxHealth = 6;
     public int currentHealth;
+    [SerializeField] private float invulnTime = .25f;
 
     [Header("Platforming")]
     [SerializeField] private float gravity = 75f;
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
     bool canDash = true;
     bool canSpawnFrost = true;
     bool slowed = false;
+    bool invuln = false;
 
     Coroutine jumpBufferRoutine = null;
     Coroutine jumpHoldRoutine = null;
@@ -149,12 +151,19 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(SlowDown(slowDownTime));
     }
 
+    private void OnParticleCollision(GameObject other)
+    {
+        if (other.CompareTag("FrostAOE") && gameObject.GetComponent<FrostAOE>().owner != gameObject)
+            StartCoroutine(SlowDown(slowDownTime));
+    }
+
     public void TakeDamage(int damageAmt)
     {
-        if (!dashing)
+        if (!dashing && !invuln)
         {
             gameManager.PlayerTakeDamage(damageAmt);
             AudioManager.Instance?.DamageSFX();
+            StartCoroutine(DamageTimer(invulnTime));
         }
     }
 
@@ -346,6 +355,7 @@ public class PlayerController : MonoBehaviour
         canSpawnFrost = false;
         FrostAOE frost = Instantiate(frostAOEprefab, transform.position, transform.rotation);
         frost.owner = gameObject;
+        frost.transform.localScale *= 1.25f;
         yield return new WaitForSeconds(frostTime);
         Destroy(frost.gameObject);
         yield return new WaitForSeconds(frostCooldown);
@@ -355,8 +365,27 @@ public class PlayerController : MonoBehaviour
     IEnumerator SlowDown(float slowTime)
     {
         slowed = true;
+        GetComponent<SpriteRenderer>().color = Color.gray;
         yield return new WaitForSeconds(slowTime);
+        GetComponent<SpriteRenderer>().color = Color.white;
         slowed = false;
+    }
+
+    IEnumerator DamageTimer(float invulnTime)
+    {
+        this.invuln = true;
+
+        for (int i = 0; i < 2; i++)
+        {
+            GetComponent<SpriteRenderer>().color = Color.gray;
+            yield return new WaitForSeconds(invulnTime * .5f);
+            GetComponent<SpriteRenderer>().color = Color.gray * 1.5f;
+            yield return new WaitForSeconds(invulnTime * .5f);
+        }
+
+        GetComponent<SpriteRenderer>().color = Color.white;
+
+        this.invuln = false;
     }
 
     public bool canDoDash()
