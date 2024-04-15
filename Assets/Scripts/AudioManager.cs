@@ -122,7 +122,7 @@ public class AudioManager : MonoBehaviour
         // Handle the idle gloop
         idleGloop = gameObject.AddComponent<AudioSource>();
         idleGloop.clip = idleGloopage;
-        idleGloop.volume = 0.3f;
+        idleGloop.volume = 0.6f;
         idleGloop.loop = true;
     }
 
@@ -210,7 +210,7 @@ public class AudioManager : MonoBehaviour
 
     // Character 
     public void JumpSFX() => SFX(jump); 
-    public void ShootGloopSFX() => SFX(gloopShot);
+    public void ShootGloopSFX() => SFX(gloopShot, 0.35f);
     public void GloopImpactSFX() => SFX(gloopImpact);
     public void DamageSFX() => SFX(damage);
 
