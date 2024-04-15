@@ -42,6 +42,7 @@ public class LichBoss : Boss
     [SerializeField]
     private ParticleSystem particles;
 
+    public bool teleporting { get; private set; } = false;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -61,21 +62,32 @@ public class LichBoss : Boss
         {
             Debug.Log("new Attack from lich boss");
             canAttack = false;
-            attack();
             // Start the coroutine to reset attack flag
             StartCoroutine(ResetBoolAfterDelay());
         }
     }
 
     //lich teleports then attacks each attack
-    void attack()
+    IEnumerator attack()
     {
         //select random spot from teleport points
         int teleportIndex = Random.Range(0, teleportPoints.Count);
         lastIndexOfTeleport = teleportIndex;
         //Debug.Log(teleportIndex);
         //teleport to new spot if new
+
+        teleporting = true;
+
+        GetComponent<SpriteRenderer>().color = Color.gray;
+        yield return new WaitForSeconds(.25f);
+
         teleport(lastPosition, teleportPoints[teleportIndex]);
+
+        yield return new WaitForSeconds(.25f);
+        GetComponent<SpriteRenderer>().color = Color.white;
+
+        teleporting = false;
+
         //and shoot projectile at player
         skullProjectileAttack();
     }
@@ -110,6 +122,8 @@ public class LichBoss : Boss
 
     private IEnumerator ResetBoolAfterDelay()
     {
+        yield return attack();
+
         if (slowed)
         {
             yield return new WaitForSeconds(lichSlowTeleDelay);

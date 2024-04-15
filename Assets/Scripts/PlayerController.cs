@@ -233,7 +233,7 @@ public class PlayerController : MonoBehaviour
 
             goop.transform.localScale += new Vector3(1, 1, 1) * scaleFactor * 2;
             Color col = new Color(1, 1, 1) * (1 - scaleFactor);
-            col.a = col.g = 1;
+            col.a = col.r = 1;
             //col.r = col.b = 1 - col.r;
             goop.GetComponent<SpriteRenderer>().color *= col;
 
@@ -316,7 +316,7 @@ public class PlayerController : MonoBehaviour
             float scaleFactor = (currentAttackDamage / chargeAttackDamage);
 
             Color col = new Color(1, 1, 1) * (1 - scaleFactor);
-            col.a = col.g = 1;
+            col.a = col.r = 1;
             GetComponent<SpriteRenderer>().color = Color.white * col;
 
             yield return null;

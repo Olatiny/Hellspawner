@@ -13,12 +13,18 @@ public class Boss : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
+        if (this is LichBoss lich && lich.teleporting)
+            return;
+
         if (collision.gameObject.CompareTag("Player"))
             FindAnyObjectByType<PlayerController>().TakeDamage(1);
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
+        if (this is LichBoss lich && lich.teleporting)
+            return;
+
         if (collision.gameObject.CompareTag("Player"))
             FindAnyObjectByType<PlayerController>().TakeDamage(1);
     }
