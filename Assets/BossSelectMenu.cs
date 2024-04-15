@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BossSelectMenu : MonoBehaviour
@@ -42,6 +43,12 @@ public class BossSelectMenu : MonoBehaviour
     [SerializeField]
     Button frostBtn;
 
+    [SerializeField]
+    Button secretBtn;
+
+    [SerializeField]
+    Image secretImg;
+
     private void Start()
     {
         SetActive(false);
@@ -58,6 +65,9 @@ public class BossSelectMenu : MonoBehaviour
         demonBtn.interactable = !gameManager.DemonDefeated;
         lichBtn.interactable = !gameManager.LichDefeated;
         frostBtn.interactable = !gameManager.FrostWardenDefeated;
+
+        secretImg.gameObject.SetActive(gameManager.DemonDefeated && gameManager.LichDefeated && gameManager.FrostWardenDefeated);
+        secretBtn.gameObject.SetActive(secretImg.gameObject.activeSelf);
     }
 
     public void SelectDemon()
@@ -88,6 +98,11 @@ public class BossSelectMenu : MonoBehaviour
         bossDescription.text = FrostDescription;
 
         SetActive(true);
+    }
+
+    public void SelectSecret()
+    {
+        SceneManager.LoadScene("Secret");
     }
 
     public void CancelSelection()

@@ -99,13 +99,20 @@ public class GameManager : MonoBehaviour
             gameOverCanv.gameObject.SetActive(true);
             battleUI.gameObject.SetActive(false);
         }
-        else
+        else if (scene.name != finalScene)
         {
             mainMenuCanv.gameObject.SetActive(false);
             bossSelectCanv.gameObject.SetActive(false);
             gameOverCanv.gameObject.SetActive(false);
             battleUI.gameObject.SetActive(true);
             playerHealthUI.GetComponent<PlayerHealth>().UpdateHearts();
+        }
+        else
+        {
+            mainMenuCanv.gameObject.SetActive(false);
+            bossSelectCanv.gameObject.SetActive(false);
+            gameOverCanv.gameObject.SetActive(false);
+            battleUI.gameObject.SetActive(false);
         }
     }
 
@@ -231,6 +238,11 @@ public class GameManager : MonoBehaviour
     {
         setHardDifficulty();
         SceneManager.LoadScene(bossSelectScene);
+    }
+
+    public void LoadSecret()
+    {
+        SceneManager.LoadScene(finalScene);
     }
 
     public void startExtremeGame()

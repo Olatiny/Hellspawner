@@ -25,9 +25,12 @@ EditorBuildSettings:
     guid: b73ae2ea87c7c284bbd63c84d7659760
   - enabled: 1
     path: Assets/Scenes/DemonScene.unity
-    guid: 04496b45d6a09d14581f93f963330fc3
+    guid: 89e54270774b68342ae3a9d632c1df81
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: 0f57013f3add61a4ab24d34f75473167
+  - enabled: 1
+    path: Assets/Scenes/Secret.unity
+    guid: ccc5390fa98ed974fbe03a893029cdae
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 910708c518e6db5488ee8cf309b012bc, type: 2}
