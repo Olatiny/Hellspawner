@@ -3778,7 +3778,7 @@ MonoBehaviour:
   gameOverScene: GameOver
   demonScene: DemonScene
   frostScene: FrostScene
-  lichScene: LichScene
+  lichScene: lichScene
   finalScene: Secret
   levelDifficulty: 0
 --- !u!1 &7027555931760052884
