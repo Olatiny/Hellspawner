@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -93,31 +94,78 @@ public class PlayerHealth : MonoBehaviour
                 if (player.canDoDash()){
                     Debug.Log("lichUIUpdatePos");
                     //set ability to full opaq/active
-                    //lichAbility.GetComponent<Renderer>().GetComponent<Renderer>().material.color = new Color(
-                    //    lichAbility.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, transparency);
-                    // Color color = lichAbility.GetComponent<Renderer>().material.color;
-                    // color.a = transparency;
-                    // gameObject.GetComponent<Renderer>().material.color = color;
+                    // Get the Image component
+                    Image image = lichAbility.GetComponent<Image>();
+
+                    // Get the material of the Image
+                    Material material = image.material;
+
+                    // Get the current color
+                    Color color = material.color;
+
+                    // Update the alpha value
+                    color.a = 1.0f;
+
+                    // Assign the modified color back to the material
+                    material.color = color;
                     
                 }
                 else{
                     Debug.Log("lichUIUpdateneg");
-                    //set ability to half opaq/inactive
-                    //lichAbility.GetComponent<Renderer>().material.color.a = 0.5f;
+                    Image image = lichAbility.GetComponent<Image>();
+
+                    // Get the material of the Image
+                    Material material = image.material;
+
+                    // Get the current color
+                    Color color = material.color;
+
+                    // Update the alpha value
+                    color.a = 0.25f;
+
+                    // Assign the modified color back to the material
+                    material.color = color;
                 }
                 
             }
             if (gameManager.frostWardenStatus()){
-                if (player.canDoDash()){
+                
+                if (player.canDoFrost()){
                     Debug.Log("frostUIUpdatePos");
                     //set ability to full opaq/active
-                    //frostAbility;
+                    // Get the Image component
+                    Image image = frostAbility.GetComponent<Image>();
+
+                    // Get the material of the Image
+                    Material material = image.material;
+
+                    // Get the current color
+                    Color color = material.color;
+
+                    // Update the alpha value
+                    color.a = 1.0f;
+
+                    // Assign the modified color back to the material
+                    material.color = color;
+                    
                 }
                 else{
                     Debug.Log("frostUIUpdateneg");
-                    //set ability to half opaq/inactive
-                    //frostAbility;
+                    Image image = frostAbility.GetComponent<Image>();
+
+                    // Get the material of the Image
+                    Material material = image.material;
+
+                    // Get the current color
+                    Color color = material.color;
+
+                    // Update the alpha value
+                    color.a = 0.25f;
+
+                    // Assign the modified color back to the material
+                    material.color = color;
                 }
+                
             }
         }
 
