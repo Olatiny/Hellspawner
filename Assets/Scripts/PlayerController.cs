@@ -99,7 +99,11 @@ public class PlayerController : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = false;
 
         if (dashing)
+        {
+            myAnimator.SetBool("Airborne", false);
+            myAnimator.SetBool("Running", false);
             return;
+        }
 
         // Gravity if not jumping
         if (!holdingJump && myRigidBody.velocity.y > -maxFallSpeed)
@@ -232,6 +236,8 @@ public class PlayerController : MonoBehaviour
                 StopCoroutine(chargeAttackRoutine);
 
             StartCoroutine(AttackCooldownTimer(attackCooldownTime));
+
+            currentAttackDamage = defaultAttackDamage;
         }
     }
 

@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/BossSelect.unity
     guid: 1f6ac45ef4518e64296923c15672a464
   - enabled: 1
-    path: Assets/Scenes/lichScene.unity
+    path: Assets/Scenes/LichScene.unity
     guid: 79ec4e71214e1ba4b9362c889b50b389
   - enabled: 1
     path: Assets/Scenes/FrostScene.unity

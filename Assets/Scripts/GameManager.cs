@@ -80,6 +80,8 @@ public class GameManager : MonoBehaviour
 
         if (scene.name == mainMenuScene)
         {
+            AudioManager.Instance?.TransitionMusicDefault();
+
             mainMenuCanv.gameObject.SetActive(true);
             bossSelectCanv.gameObject.SetActive(false);
             gameOverCanv.gameObject.SetActive(false);
@@ -87,6 +89,8 @@ public class GameManager : MonoBehaviour
         }
         else if (scene.name == bossSelectScene)
         {
+            AudioManager.Instance?.TransitionMusicDefault();
+
             mainMenuCanv.gameObject.SetActive(false);
             bossSelectCanv.gameObject.SetActive(true);
             gameOverCanv.gameObject.SetActive(false);
@@ -94,6 +98,8 @@ public class GameManager : MonoBehaviour
         }
         else if (scene.name == gameOverScene)
         {
+            AudioManager.Instance?.TransitionMusicDefault();
+
             mainMenuCanv.gameObject.SetActive(false);
             bossSelectCanv.gameObject.SetActive(false);
             gameOverCanv.gameObject.SetActive(true);
@@ -101,6 +107,13 @@ public class GameManager : MonoBehaviour
         }
         else if (scene.name != finalScene)
         {
+            if (scene.name == demonScene)
+                AudioManager.Instance?.TransitionMusicFire();
+            else if (scene.name == frostScene)
+                AudioManager.Instance?.TransitionMusicIce();
+            else if (scene.name == lichScene)
+                AudioManager.Instance?.TransitionMusicLich();
+
             mainMenuCanv.gameObject.SetActive(false);
             bossSelectCanv.gameObject.SetActive(false);
             gameOverCanv.gameObject.SetActive(false);
