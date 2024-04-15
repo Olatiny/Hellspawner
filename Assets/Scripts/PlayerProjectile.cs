@@ -42,6 +42,11 @@ public class PlayerProjectile : MonoBehaviour
         this.speed = speed;
         this.damage = damage;
 
+        if (direction.x < 0)
+            GetComponent<SpriteRenderer>().flipX = true;
+        else
+            GetComponent<SpriteRenderer>().flipX = false;
+
         flying = true;
     }
 

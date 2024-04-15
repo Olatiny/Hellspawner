@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 864817285666948894}
   - component: {fileID: 5048562440940752896}
   - component: {fileID: 2745088942262920387}
+  - component: {fileID: 4567178473504671326}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -31,8 +32,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.8541, y: -3.2082, z: 0}
-  m_LocalScale: {x: 0.7498329, y: 0.7498329, z: 0.7498329}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Sprite: {fileID: 1940021608, guid: 183f53429fa0fb54dbfd42495fce3739, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -120,8 +121,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Offset: {x: 0.0038195848, y: -0.03819704}
+  m_Size: {x: 0.7020638, y: 1.6791468}
   m_Direction: 0
 --- !u!50 &864817285666948894
 Rigidbody2D:
@@ -199,6 +200,54 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 6f08d390-4baf-47cc-817e-0f2824e8a32d
     m_ActionName: PlatformerControls/Frost[/Keyboard/z]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d102c1c4-da19-4f6e-b8fe-1b3020f26700
+    m_ActionName: ControllerCursorUI/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e7e2691f-1274-49bc-a3ca-845d05c805f1
+    m_ActionName: ControllerCursorUI/Interact[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eac2f504-229a-4410-bfe3-329a4cc84ef8
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 87803a5f-e12c-47ba-b73d-20cf634f580b
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9bb11c1e-abc7-4c01-a574-a34971da10e6
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3b9c5146-938b-4767-9d97-f10f5595014b
+    m_ActionName: UI/Point[/Mouse/position,/Pen/position,/Touchscreen/touch0/position,/Touchscreen/touch1/position,/Touchscreen/touch2/position,/Touchscreen/touch3/position,/Touchscreen/touch4/position,/Touchscreen/touch5/position,/Touchscreen/touch6/position,/Touchscreen/touch7/position,/Touchscreen/touch8/position,/Touchscreen/touch9/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 12b14197-4a7c-4358-8a35-9e0e131ae2ab
+    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip,/Touchscreen/touch0/press,/Touchscreen/touch1/press,/Touchscreen/touch2/press,/Touchscreen/touch3/press,/Touchscreen/touch4/press,/Touchscreen/touch5/press,/Touchscreen/touch6/press,/Touchscreen/touch7/press,/Touchscreen/touch8/press,/Touchscreen/touch9/press]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0ad895a6-0c34-4491-9567-f3e2bf3af4f6
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ba1ec707-77c4-4bdf-ae79-4c97f178bee7
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c0e37dc9-93a6-47d4-9471-535d868980bf
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fc8394dc-57ff-4b39-a13e-c1f29edfd548
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a65eeed0-958e-41f4-9d02-a4bee9a456b3
+    m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlatformerControls
@@ -216,19 +265,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761eb6f0ce594dd429b9a1fa8b65edfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 6
+  currentHealth: 0
   gravity: 75
   jumpVelocity: 15
   jumpHoldTime: 0.15
   walkSpeed: 10
   maxFallSpeed: 20
   jumpBufferTime: 0.2
-  jumpRaycastDist: 0.4
+  jumpRaycastDist: 0.8
   projectilePrefab: {fileID: 1817933880115920156, guid: 21a801bbf56e4a9498b98f775e73263f, type: 3}
   projectileSpawnDist: 0.8
   maxProjectiles: 3
   projectileSpeed: 15
   defaultAttackDamage: 1
-  chargeAttackDamage: 3
+  chargeAttackDamage: 10
   maxChargeTime: 1.5
   attackCooldownTime: 0.1
   projectiles: []
@@ -238,3 +289,25 @@ MonoBehaviour:
   frostAOEprefab: {fileID: 3248402227556359220, guid: ded795340006a49448f00a72737ba1e5, type: 3}
   frostTime: 2
   frostCooldown: 4
+  slowDownTime: 2
+--- !u!95 &4567178473504671326
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202588703862564252}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ea0c925081280dd4892ab7a2004252b6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

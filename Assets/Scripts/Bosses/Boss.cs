@@ -19,7 +19,7 @@ public class Boss : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        bossCurrentHealth -= (damage + 40);
+        bossCurrentHealth -= (damage);
 
         GameManager.Instance.UpdateBossHealthBar(this);
 
