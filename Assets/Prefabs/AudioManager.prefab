@@ -44,3 +44,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05356e7f492aed84aad90ccc17be28c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicBaseLayer: {fileID: 8300000, guid: 37391814a5125a34f94397c5bfd5f84a, type: 3}
+  musicDemonLayer: {fileID: 8300000, guid: 8f661d8eb8ff4c544a86a5cd5f018a03, type: 3}
+  musicTrollLayer: {fileID: 8300000, guid: 630f8d52692f34b4a941d8fb70bb1f6e, type: 3}
+  musicLichLayer: {fileID: 8300000, guid: c7bc7a19df978e34fa12b7696570fb22, type: 3}
+  musicVolume: 0.5
+  summoningNoise: []
+  idleGloopage: {fileID: 8300000, guid: 1399352f287eb1a4898ef32f6f4924a3, type: 3}
+  footstepLoop: {fileID: 8300000, guid: 05f5b8c55a6d64442bbebbaed1a41769, type: 3}
+  jump:
+  - {fileID: 8300000, guid: 954bc9e6687d96e41a909213c752b051, type: 3}
+  gloopShot:
+  - {fileID: 8300000, guid: 188182d450504c944afca5c320027bc4, type: 3}
+  - {fileID: 8300000, guid: 4a4f792ac5eb51d48b1e619e5c03e7f5, type: 3}
+  gloopImpact:
+  - {fileID: 8300000, guid: 1b1bf5cfe5148bf4dad9ad7ce83f84f5, type: 3}
+  - {fileID: 8300000, guid: 8dca79cc88cd21b489ce5bf4b46079a2, type: 3}
+  - {fileID: 8300000, guid: 000ad7bf4abc02b42a1ce00577aa0bc7, type: 3}
+  damage:
+  - {fileID: 8300000, guid: af700f7f7f09d314a84416c1cb5b5189, type: 3}
+  - {fileID: 8300000, guid: 17e8b1310ace5b04c9a72a723cad4a62, type: 3}
+  - {fileID: 8300000, guid: 51abed777cda49f44b16d04a4a18f64e, type: 3}
+  scorchRay: []
+  hellCharge: []
+  trollJump: []
+  trollLand: []
+  iciclesHitGround: []
+  iceCloudCrystalNoise: []
+  undeadTeleport: []
+  skullShoot: []
+  skullImpact: []
+  click: []
+  extremeMode: []

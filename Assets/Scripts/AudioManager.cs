@@ -19,12 +19,13 @@ public class AudioManager : MonoBehaviour
     // voiced dialogue), plus an additional one for sound effects.
 
 
-    [SerializeField] 
-    private AudioSource musicBottomLayerSource; // maybe make these programmatically
-    [SerializeField]
-    private AudioSource musicTopLayerSource;
-    [SerializeField]
+    private AudioSource musicBaseLayerSource; // maybe make these programmatically
+    private AudioSource musicDemonLayerSource;
+    private AudioSource musicTrollLayerSource;
+    private AudioSource musicLichLayerSource;
+    private AudioSource currentLayerSource;
     private AudioSource sfx;
+    private AudioSource idleGloop;
 
     // https://docs.unity3d.com/ScriptReference/AudioSource.html has a list of fields & methods that
     // you can use, such as normalSource.loop (boolean), normalSource.Play() and normalSource.clip .
@@ -33,25 +34,19 @@ public class AudioManager : MonoBehaviour
     // Next up, audio clips. These are literally audio files.
     // Using mp3 is not disallowed, but it will make your loops a little choppy because it's compressed.
     // using .wav or .ogg is recommended
-    [SerializeField]
-    private AudioClip musicBottomLayer;
+    [Header("Music")]
+    [SerializeField] private AudioClip musicBaseLayer;
+    [SerializeField] private AudioClip musicDemonLayer;
+    [SerializeField] private AudioClip musicTrollLayer;
+    [SerializeField] private AudioClip musicLichLayer;
+    [SerializeField] private float musicVolume = 0.5f;
 
-    [SerializeField]
-    private AudioClip musicFireLayer;
-    [SerializeField]
-    private AudioClip musicIceLayer;
-    [SerializeField]
-    private AudioClip musicLichLayer;
-
-
-    private int currentMusicState = 0; // 0 default, 1 fire, 2 ice, 3 lich
 
 
     // All sfx will be played as oneshots through the sfx source
 
-
-    [SerializeField]
-    private List<AudioClip> summoningNoise;
+    [Header("Character")]
+    [SerializeField] private List<AudioClip> summoningNoise;
 
     [SerializeField] private AudioClip idleGloopage;
     [SerializeField] private AudioClip footstepLoop;
@@ -60,21 +55,20 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private List<AudioClip> gloopShot;
     [SerializeField] private List<AudioClip> gloopImpact;
     [SerializeField] private List<AudioClip> damage;
-    // ...
 
-    // demon sounds
+    [Header("Demon")]// demon sounds
     [SerializeField] private List<AudioClip> scorchRay;
     [SerializeField] private List<AudioClip> hellCharge;
     //[SerializeField] private List<AudioClip> demonVocals;
 
 
-    // troll sounds
+    [Header("Troll")]// troll sounds
     [SerializeField] private List<AudioClip> trollJump;
     [SerializeField] private List<AudioClip> trollLand;
     [SerializeField] private List<AudioClip> iciclesHitGround;
     [SerializeField] private List<AudioClip> iceCloudCrystalNoise;
 
-    // lich sounds
+    [Header("Lich")]// lich sounds
     [SerializeField] private List<AudioClip> undeadTeleport;
     [SerializeField] private List<AudioClip> skullShoot;
     [SerializeField] private List<AudioClip> skullImpact;
@@ -93,19 +87,43 @@ public class AudioManager : MonoBehaviour
     // We don't need to assign any clips to sfx yet, we'll get there.
     void Start()
     {
-        //musicSource.clip = song;
-        //musicSource.volume = songVolume;
-        //musicSource.loop = true;
-        //musicSource.Play();
+        // sfx
+        sfx = gameObject.AddComponent<AudioSource>();
+
+        // base layer
+        musicBaseLayerSource = gameObject.AddComponent<AudioSource>();
+        musicBaseLayerSource.clip = musicBaseLayer;
+        musicBaseLayerSource.loop = true;
+        musicBaseLayerSource.volume = musicVolume;
+        // demon layer
+        musicDemonLayerSource = gameObject.AddComponent<AudioSource>();
+        musicDemonLayerSource.clip = musicDemonLayer;
+        musicDemonLayerSource.loop = true;
+        musicDemonLayerSource.volume = 0.0f;
+        // troll layer
+        musicTrollLayerSource = gameObject.AddComponent<AudioSource>();
+        musicTrollLayerSource.clip = musicTrollLayer;
+        musicTrollLayerSource.loop = true;
+        musicTrollLayerSource.volume = 0.0f;
+        // lich layer
+        musicLichLayerSource = gameObject.AddComponent<AudioSource>();
+        musicLichLayerSource.clip = musicLichLayer;
+        musicLichLayerSource.loop = true;
+        musicLichLayerSource.volume = 0.0f;
 
 
-        //ambienceSource.clip = natureSounds;
-        //ambienceSource.volume = natureSoundsVolume;
-        //ambienceSource.loop = true;
-        //ambienceSource.Play();
+        // play all the clips at the same time
+        musicBaseLayerSource.Play();
+        musicDemonLayerSource.Play();
+        musicTrollLayerSource.Play();
+        musicLichLayerSource.Play();
 
-        // ...
 
+        // Handle the idle gloop
+        idleGloop = gameObject.AddComponent<AudioSource>();
+        idleGloop.clip = idleGloopage;
+        idleGloop.volume = 0.3f;
+        idleGloop.loop = true;
     }
 
 
@@ -113,35 +131,63 @@ public class AudioManager : MonoBehaviour
     // Now actually come the methods you are writing that will alter what audio happens.
     // Call methods you write here in other scripts with "AudioManager.Instance.MethodInThisClassThatYouWrote();"
 
-    //public void PauseAdjust()
-    //{
-    //    StartCoroutine(Fade(musicSource, .1f, songVolume / 2));
-    //}
+    public void PauseAdjust()
+    {
 
-    //public void UnpauseAdjust()
-    //{
-    //    StartCoroutine(Fade(musicSource, .1f, songVolume));
-    //}
+        StartCoroutine(Fade(musicBaseLayerSource, .1f, musicVolume * 0.4f));
+        if (currentLayerSource != null)
+            StartCoroutine(Fade(currentLayerSource, .1f, musicVolume *0.4f));
+    }
+
+    public void UnpauseAdjust()
+    {
+        StartCoroutine(Fade(musicBaseLayerSource, .1f, musicVolume));
+        if (currentLayerSource != null)
+            StartCoroutine(Fade(currentLayerSource, .1f, musicVolume));
+    }
 
     // ...
 
     public void TransitionMusicDefault()
     {
-        // TODO
+        // if an audio source is already silenced, then fading it should do nothing
+        StartCoroutine(Fade(musicDemonLayerSource, .1f, 0));
+        StartCoroutine(Fade(musicTrollLayerSource, .1f, 0));
+        StartCoroutine(Fade(musicLichLayerSource, .1f, 0));
+        currentLayerSource = null;
     }
 
     public void TransitionMusicFire()
     {
-        // TODO
+        StartCoroutine(Fade(musicDemonLayerSource, .1f, musicVolume));
+        StartCoroutine(Fade(musicTrollLayerSource, .1f, 0));
+        StartCoroutine(Fade(musicLichLayerSource, .1f, 0));
+        currentLayerSource = musicDemonLayerSource;
     }
 
     public void TransitionMusicIce()
     {
-        // TODO
+        StartCoroutine(Fade(musicDemonLayerSource, .1f, 0));
+        StartCoroutine(Fade(musicTrollLayerSource, .1f, musicVolume));
+        StartCoroutine(Fade(musicLichLayerSource, .1f, 0));
+        currentLayerSource = musicTrollLayerSource;
     }
     public void TransitionMusicLich()
     {
-        // TODO
+        StartCoroutine(Fade(musicDemonLayerSource, .1f, 0));
+        StartCoroutine(Fade(musicTrollLayerSource, .1f, 0));
+        StartCoroutine(Fade(musicLichLayerSource, .1f, musicVolume));
+        currentLayerSource = musicLichLayerSource;
+    }
+
+    public void BeginIdleGloop()
+    {
+        idleGloop.Play();
+    }
+
+    public void StopIdleGloop()
+    {
+        idleGloop.Stop();
     }
 
     public void SummoningSFX()
