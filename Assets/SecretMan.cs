@@ -89,15 +89,8 @@ public class SecretMan : MonoBehaviour
         }
 
         float timeElapsed = 0f;
-
-        while (timeElapsed < jumpScareTime)
-        {
-            jumpScareCanvas.gameObject.SetActive(true);
-            yield return new WaitForSeconds(.1f * jumpScareTime);
-            jumpScareCanvas.gameObject.SetActive(false);
-            yield return new WaitForSeconds(.2f * jumpScareTime);
-            timeElapsed += Time.deltaTime;
-        }
+        jumpScareCanvas.gameObject.SetActive(true);
+        yield return new WaitForSeconds(jumpScareTime);
 
         Application.Quit();
     }
