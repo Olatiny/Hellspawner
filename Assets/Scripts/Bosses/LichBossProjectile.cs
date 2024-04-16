@@ -17,6 +17,11 @@ public class LichBossProjectile : MonoBehaviour
     {
         //set initial direction to continue going towards until miss or hit
         direction = (player.transform.position - transform.position).normalized;
+
+        if (direction.x < 0)
+            GetComponent<SpriteRenderer>().flipX = true;
+        else
+            GetComponent<SpriteRenderer>().flipX = false;
     }
 
     private void FixedUpdate()

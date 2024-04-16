@@ -112,6 +112,8 @@ public class DemonBoss : Boss
     {
         if (collision.gameObject.CompareTag("FrostAOE"))
             StartCoroutine(SlowTimer());
+
+        base.OnTriggerEnter2D(collision);
     }
 
     private void OnParticleCollision(GameObject other)

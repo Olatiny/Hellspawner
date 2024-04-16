@@ -26,7 +26,7 @@ public class PlayerProjectile : MonoBehaviour
 
 
         // Damage Enemy
-        if (collision.gameObject.CompareTag("Enemy") && !(collision.gameObject.GetComponent<LichBoss>()?.teleporting).Value)
+        if (collision.gameObject.CompareTag("Enemy"))
             collision.gameObject.GetComponent<Boss>().TakeDamage(damage);
 
         // if (collision.gameObject.CompareTag("Skull"))
