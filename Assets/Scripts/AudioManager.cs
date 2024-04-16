@@ -214,7 +214,7 @@ public class AudioManager : MonoBehaviour
     public void JumpSFX() => SFX(jump); 
     public void ShootGloopSFX() => SFX(gloopShot, 0.35f);
     public void GloopImpactSFX() => SFX(gloopImpact);
-    public void DamageSFX() => SFX(damage);
+    public void DamageSFX() => SFX(damage, 2f);
 
 
     // demon
