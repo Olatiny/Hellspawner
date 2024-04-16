@@ -279,9 +279,9 @@ MonoBehaviour:
   projectileSpawnDist: 0.8
   maxProjectiles: 3
   projectileSpeed: 15
-  defaultAttackDamage: 1
-  chargeAttackDamage: 5
-  maxChargeTime: 1.5
+  defaultAttackDamage: 1.5
+  chargeAttackDamage: 6
+  maxChargeTime: 1
   attackCooldownTime: 0.1
   projectiles: []
   currentAttackDamage: 1

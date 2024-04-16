@@ -25,8 +25,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float projectileSpawnDist = .5f;
     [SerializeField] private int maxProjectiles = 3;
     [SerializeField] private float projectileSpeed = 10f;
-    [SerializeField] private int defaultAttackDamage = 1;
-    [SerializeField] private int chargeAttackDamage = 3;
+    [SerializeField] private float defaultAttackDamage = 1;
+    [SerializeField] private float chargeAttackDamage = 3;
     [SerializeField] private float maxChargeTime = 1.5f;
     [SerializeField] private float attackCooldownTime = .1f;
     public List<PlayerProjectile> projectiles;
