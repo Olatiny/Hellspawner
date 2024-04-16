@@ -85,7 +85,7 @@ public class AudioManager : MonoBehaviour
     // For us, that means assign all of the clips and volumes from the serialized fields,
     // or setting up any state needed for whatever dynamic music system you end up making.
     // We don't need to assign any clips to sfx yet, we'll get there.
-    void Start()
+    void Awake()
     {
         // sfx
         sfx = gameObject.AddComponent<AudioSource>();
@@ -136,7 +136,7 @@ public class AudioManager : MonoBehaviour
 
         StartCoroutine(Fade(musicBaseLayerSource, .1f, musicVolume * 0.4f));
         if (currentLayerSource != null)
-            StartCoroutine(Fade(currentLayerSource, .1f, musicVolume *0.4f));
+            StartCoroutine(Fade(currentLayerSource, .1f, musicVolume * 0.4f));
     }
 
     public void UnpauseAdjust()
@@ -263,7 +263,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        sfx.PlayOneShot(list[ Random.Range(0, list.Count) ], vol);
+        sfx.PlayOneShot(list[Random.Range(0, list.Count)], vol);
     }
 
 

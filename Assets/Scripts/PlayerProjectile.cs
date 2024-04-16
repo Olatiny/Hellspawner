@@ -24,17 +24,19 @@ public class PlayerProjectile : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("PlayerAttack") || collision.gameObject.CompareTag("Laser") || collision.gameObject.CompareTag("EnemyAttack"))
             return;
 
+
         // Damage Enemy
         if (collision.gameObject.CompareTag("Enemy"))
             collision.gameObject.GetComponent<Boss>().TakeDamage(damage);
 
         // if (collision.gameObject.CompareTag("Skull"))
         //     Destroy(collision.gameObject);
-        if (!collision.gameObject.CompareTag("FrostAOE")){
+        if (!collision.gameObject.CompareTag("FrostAOE"))
+        {
             // We hit a wall
             KillProjectile();
         }
-        
+
     }
 
     public void SendProjectile(PlayerController player, float speed, Vector2 direction, float damage)

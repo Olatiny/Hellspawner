@@ -1114,7 +1114,7 @@ PrefabInstance:
       objectReference: {fileID: 4712936268509516809}
     - target: {fileID: 950303140855636883, guid: c7171e8abbde30b4fa21da7d5d5d2e18, type: 3}
       propertyPath: m_Name
-      value: LichBoss
+      value: LICH
       objectReference: {fileID: 0}
     - target: {fileID: 2706983725586318897, guid: c7171e8abbde30b4fa21da7d5d5d2e18, type: 3}
       propertyPath: m_LocalPosition.x

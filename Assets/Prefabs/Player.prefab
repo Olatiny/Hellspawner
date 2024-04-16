@@ -267,6 +267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 6
   currentHealth: 0
+  invulnTime: 1
   gravity: 75
   jumpVelocity: 20
   jumpHoldTime: 0.15
@@ -278,17 +279,17 @@ MonoBehaviour:
   projectileSpawnDist: 0.8
   maxProjectiles: 3
   projectileSpeed: 15
-  defaultAttackDamage: 1
-  chargeAttackDamage: 5
-  maxChargeTime: 1.5
+  defaultAttackDamage: 1.5
+  chargeAttackDamage: 6
+  maxChargeTime: 1
   attackCooldownTime: 0.1
   projectiles: []
   currentAttackDamage: 1
   dashSpeed: 20
   dashTime: 0.15
   frostAOEprefab: {fileID: 3248402227556359220, guid: ded795340006a49448f00a72737ba1e5, type: 3}
-  frostTime: 2
-  frostCooldown: 4
+  frostTime: 4
+  frostCooldown: 1
   slowDownTime: 2
 --- !u!95 &4567178473504671326
 Animator:

@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [Header("Stats")]
     public int maxHealth = 6;
     public int currentHealth;
+    [SerializeField] private float invulnTime = .25f;
 
     [Header("Platforming")]
     [SerializeField] private float gravity = 75f;
@@ -24,8 +25,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float projectileSpawnDist = .5f;
     [SerializeField] private int maxProjectiles = 3;
     [SerializeField] private float projectileSpeed = 10f;
-    [SerializeField] private int defaultAttackDamage = 1;
-    [SerializeField] private int chargeAttackDamage = 3;
+    [SerializeField] private float defaultAttackDamage = 1;
+    [SerializeField] private float chargeAttackDamage = 3;
     [SerializeField] private float maxChargeTime = 1.5f;
     [SerializeField] private float attackCooldownTime = .1f;
     public List<PlayerProjectile> projectiles;
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
     bool canDash = true;
     bool canSpawnFrost = true;
     bool slowed = false;
+    bool invuln = false;
 
     Coroutine jumpBufferRoutine = null;
     Coroutine jumpHoldRoutine = null;
@@ -149,12 +151,19 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(SlowDown(slowDownTime));
     }
 
+    private void OnParticleCollision(GameObject other)
+    {
+        if (other.CompareTag("FrostAOE") && gameObject.GetComponent<FrostAOE>().owner != gameObject)
+            StartCoroutine(SlowDown(slowDownTime));
+    }
+
     public void TakeDamage(int damageAmt)
     {
-        if (!dashing)
+        if (!dashing && !invuln)
         {
             gameManager.PlayerTakeDamage(damageAmt);
             AudioManager.Instance?.DamageSFX();
+            StartCoroutine(DamageTimer(invulnTime));
         }
     }
 
@@ -224,7 +233,7 @@ public class PlayerController : MonoBehaviour
 
             goop.transform.localScale += new Vector3(1, 1, 1) * scaleFactor * 2;
             Color col = new Color(1, 1, 1) * (1 - scaleFactor);
-            col.a = col.g = 1;
+            col.a = col.r = 1;
             //col.r = col.b = 1 - col.r;
             goop.GetComponent<SpriteRenderer>().color *= col;
 
@@ -245,6 +254,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!context.performed || !canDash || !gameManager.LichDefeated)
             return;
+
+        myAnimator.SetTrigger("Dash");
 
         canDash = false;
         dashing = true;
@@ -307,7 +318,7 @@ public class PlayerController : MonoBehaviour
             float scaleFactor = (currentAttackDamage / chargeAttackDamage);
 
             Color col = new Color(1, 1, 1) * (1 - scaleFactor);
-            col.a = col.g = 1;
+            col.a = col.r = 1;
             GetComponent<SpriteRenderer>().color = Color.white * col;
 
             yield return null;
@@ -346,6 +357,7 @@ public class PlayerController : MonoBehaviour
         canSpawnFrost = false;
         FrostAOE frost = Instantiate(frostAOEprefab, transform.position, transform.rotation);
         frost.owner = gameObject;
+        frost.transform.localScale *= 1.25f;
         yield return new WaitForSeconds(frostTime);
         Destroy(frost.gameObject);
         yield return new WaitForSeconds(frostCooldown);
@@ -355,8 +367,27 @@ public class PlayerController : MonoBehaviour
     IEnumerator SlowDown(float slowTime)
     {
         slowed = true;
+        GetComponent<SpriteRenderer>().color = Color.gray;
         yield return new WaitForSeconds(slowTime);
+        GetComponent<SpriteRenderer>().color = Color.white;
         slowed = false;
+    }
+
+    IEnumerator DamageTimer(float invulnTime)
+    {
+        this.invuln = true;
+
+        for (int i = 0; i < 2; i++)
+        {
+            GetComponent<SpriteRenderer>().color = Color.gray;
+            yield return new WaitForSeconds(invulnTime * .5f);
+            GetComponent<SpriteRenderer>().color = Color.gray * 1.5f;
+            yield return new WaitForSeconds(invulnTime * .5f);
+        }
+
+        GetComponent<SpriteRenderer>().color = Color.white;
+
+        this.invuln = false;
     }
 
     public bool canDoDash()
