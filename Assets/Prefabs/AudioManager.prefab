@@ -48,7 +48,7 @@ MonoBehaviour:
   musicDemonLayer: {fileID: 8300000, guid: 8f661d8eb8ff4c544a86a5cd5f018a03, type: 3}
   musicTrollLayer: {fileID: 8300000, guid: 630f8d52692f34b4a941d8fb70bb1f6e, type: 3}
   musicLichLayer: {fileID: 8300000, guid: c7bc7a19df978e34fa12b7696570fb22, type: 3}
-  musicVolume: 0.35
+  musicVolume: 0.4
   summoningNoise: []
   idleGloopage: {fileID: 8300000, guid: 1399352f287eb1a4898ef32f6f4924a3, type: 3}
   footstepLoop: {fileID: 8300000, guid: 05f5b8c55a6d64442bbebbaed1a41769, type: 3}
