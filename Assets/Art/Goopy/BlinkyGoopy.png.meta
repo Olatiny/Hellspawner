@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b9185216a57087f4fa1bbd0e8abf99c3
+guid: 68133f02963d23845bc4b6ec74982126
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FrostyCloudParticle_0
+      name: BlinkyGoopy_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 144
-        height: 116
+        width: 252
+        height: 172
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66f1c3cacea7b284eb1f16fcec541aff
-      internalID: 2026526938
+      spriteID: 5e3cf19d1b5f7b849a7b7b01738d8c12
+      internalID: 168180498
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FrostyCloudParticle_1
+      name: BlinkyGoopy_1
       rect:
         serializedVersion: 2
-        x: 144
+        x: 252
         y: 0
-        width: 144
-        height: 116
+        width: 252
+        height: 172
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f07a7924f33992645bb577a53a367d58
-      internalID: -1803992186
+      spriteID: 077cc19a32b901f4aa74e68d6e013baa
+      internalID: -871573025
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FrostyCloudParticle_2
+      name: BlinkyGoopy_2
       rect:
         serializedVersion: 2
-        x: 288
+        x: 504
         y: 0
-        width: 144
-        height: 116
+        width: 252
+        height: 172
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,8 +166,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94f0ef4a016639f489075ecade5ceaa7
-      internalID: 1017494728
+      spriteID: 7da0600dc58084b4195d48e79a944fde
+      internalID: 250411707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlinkyGoopy_3
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 0
+        width: 252
+        height: 172
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f182ac6ea31ec8f4a98db7df919fbf3a
+      internalID: -1146258854
       vertices: []
       indices: 
       edges: []
@@ -183,9 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      FrostyCloudParticle_0: 2026526938
-      FrostyCloudParticle_1: -1803992186
-      FrostyCloudParticle_2: 1017494728
+      BlinkyGoopy_0: 168180498
+      BlinkyGoopy_1: -871573025
+      BlinkyGoopy_2: 250411707
+      BlinkyGoopy_3: -1146258854
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

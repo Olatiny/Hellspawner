@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b9185216a57087f4fa1bbd0e8abf99c3
+guid: c6f7a502227d6d2449c34ab86787a06c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FrostyCloudParticle_0
+      name: LichSkullProjectile_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 144
-        height: 116
+        width: 116
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66f1c3cacea7b284eb1f16fcec541aff
-      internalID: 2026526938
+      spriteID: 6c9efa633f5a69f46bf635e511e774a4
+      internalID: 215344818
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FrostyCloudParticle_1
+      name: LichSkullProjectile_1
       rect:
         serializedVersion: 2
-        x: 144
+        x: 116
         y: 0
-        width: 144
-        height: 116
+        width: 116
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f07a7924f33992645bb577a53a367d58
-      internalID: -1803992186
+      spriteID: 50a18c5b4bbe5204884a199db7b55aad
+      internalID: -1115014562
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FrostyCloudParticle_2
+      name: LichSkullProjectile_2
       rect:
         serializedVersion: 2
-        x: 288
+        x: 232
         y: 0
-        width: 144
-        height: 116
+        width: 116
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,8 +166,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94f0ef4a016639f489075ecade5ceaa7
-      internalID: 1017494728
+      spriteID: 21f5fd0a6c01a434fa833973be8e31ab
+      internalID: 340567324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LichSkullProjectile_3
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 0
+        width: 116
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd1c013d07efe394598ff59c5ddbb7e3
+      internalID: -301161355
       vertices: []
       indices: 
       edges: []
@@ -183,9 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      FrostyCloudParticle_0: 2026526938
-      FrostyCloudParticle_1: -1803992186
-      FrostyCloudParticle_2: 1017494728
+      LichSkullProjectile_0: 215344818
+      LichSkullProjectile_1: -1115014562
+      LichSkullProjectile_2: 340567324
+      LichSkullProjectile_3: -301161355
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

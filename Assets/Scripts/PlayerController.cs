@@ -255,6 +255,8 @@ public class PlayerController : MonoBehaviour
         if (!context.performed || !canDash || !gameManager.LichDefeated)
             return;
 
+        myAnimator.SetTrigger("Dash");
+
         canDash = false;
         dashing = true;
 
