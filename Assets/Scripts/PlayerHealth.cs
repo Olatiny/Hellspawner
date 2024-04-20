@@ -56,7 +56,7 @@ public class PlayerHealth : MonoBehaviour
 
         for (int i = 0; i < maxHealth; i++)
         {
-            Vector3 pos = startHeartsHere.position + new Vector3(i * heartWidth, 0);
+            Vector3 pos = startHeartsHere.position + new Vector3((float)(i * (heartWidth / 1920f) * (float) Screen.width), 0);
             hearts.Add(Instantiate(i < currHealth ? happyHeart : sadHeart, pos, transform.rotation, transform));
         }
     }
@@ -73,19 +73,19 @@ public class PlayerHealth : MonoBehaviour
         }
             
         int index = 0;
-        Vector3 pos = startAbilitiesHere.position + new Vector3(index * abilityWidth, 0);
+        Vector3 pos = startAbilitiesHere.position + new Vector3(index * (abilityWidth / 1920f) * Screen.width, 0);
         if (gameManager.lichStatus()){
             Debug.Log("lichUISet");
             abilityIndicators.Add(Instantiate(lichAbility, pos, transform.rotation, transform));
             index++; //increment index so stuff doesn't overlap
         }
-        pos = startAbilitiesHere.position + new Vector3(index * abilityWidth, 0);
+        pos = startAbilitiesHere.position + new Vector3(index * (abilityWidth / 1920f) * Screen.width, 0);
         if (gameManager.frostWardenStatus()){
             Debug.Log("frostUISet");
             abilityIndicators.Add(Instantiate(frostAbility, pos, transform.rotation, transform));
             index++; //increment index so stuff doesn't overlap
         }
-        pos = startAbilitiesHere.position + new Vector3(index * abilityWidth, 0);
+        pos = startAbilitiesHere.position + new Vector3(index * (abilityWidth / 1920f) * Screen.width, 0);
         if (gameManager.demonStatus()){
             Debug.Log("demonUISet"); 
             //instantiate with icon for always ready/active

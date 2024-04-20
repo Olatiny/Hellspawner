@@ -203,7 +203,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000015259, y: -188.04}
+  m_AnchoredPosition: {x: 0, y: -188.03998}
   m_SizeDelta: {x: 736, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8079861386347603582
@@ -404,7 +404,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 2
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -447,7 +447,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1221418684194070965
 RectTransform:
   m_ObjectHideFlags: 0
@@ -516,7 +516,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 2
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -565,9 +565,9 @@ MonoBehaviour:
 
 '
   FrostName: FROST WARDEN
-  FrostDescription: A huge monster from the frozen-over ninth circle of Hell itself.
-    Those who barely escaped this icy brute report getting stuck, but luckily the
-    monster went after someone else allowing them to escape.
+  FrostDescription: "A huge monster from the frozen-over ninth circle of Hell itself.
+    \n\nThose who barely escaped this icy brute report getting stuck, but luckily
+    the monster went after someone else allowing them to escape."
   bossName: {fileID: 3073434548413880989}
   bossDescription: {fileID: 102889393353444005}
   background: {fileID: 7648461847994712826}
@@ -782,7 +782,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1035,7 +1035,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.8, y: -79.9}
+  m_AnchoredPosition: {x: -1.7999878, y: -79.899994}
   m_SizeDelta: {x: 500, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1084559051576128392
@@ -1496,8 +1496,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 509.2234, y: 20.948692}
-  m_SizeDelta: {x: 561.9807, y: 537.8954}
+  m_AnchoredPosition: {x: 511.84, y: 20.948692}
+  m_SizeDelta: {x: 544.77, y: 537.8954}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8330966691650154085
 CanvasRenderer:
@@ -1568,7 +1568,7 @@ MonoBehaviour:
   m_fontSizeMin: 40
   m_fontSizeMax: 50
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1905,7 +1905,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: -328.1}
+  m_AnchoredPosition: {x: 2, y: -328.09998}
   m_SizeDelta: {x: 316, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5314147577383630521
@@ -2886,7 +2886,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -203.8}
+  m_AnchoredPosition: {x: 0, y: -203.79999}
   m_SizeDelta: {x: 480, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2653194772018526789
@@ -3124,7 +3124,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2, y: 76}
+  m_AnchoredPosition: {x: -1.9, y: 76}
   m_SizeDelta: {x: 492, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8674442402432798997
@@ -3559,7 +3559,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 2
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -3774,8 +3774,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.5
+  m_ScreenMatchMode: 2
+  m_MatchWidthOrHeight: 0.354
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
