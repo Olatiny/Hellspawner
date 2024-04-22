@@ -132,6 +132,7 @@ public class GameManager : MonoBehaviour
     public void ResetPlayerProgress()
     {
         LichDefeated = DemonDefeated = FrostWardenDefeated = false;
+        UpdatePlayerHealthAfterLoad();
     }
 
     public void SetDifficulty(GameManager.Difficulty difficulty)
